@@ -176,7 +176,7 @@ class DoublyLinkedList :
         
 
 # PRINT FORWARD 
-    def print_forward(self) :       # same as print
+    def print_forward(self) :       # same as display function
         if self.head is None :
             print("DLL is Empty")
             return
