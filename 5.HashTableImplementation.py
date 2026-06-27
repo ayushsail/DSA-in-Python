@@ -19,7 +19,7 @@ class HashTable :
 # GET FUNCTION
     def get(self,key) :
         h = self.get_hash(key)
-        print(f"Stock Price on {key} is ",self.arr[h])
+        return self.arr[h]
     
 # REMOVE FUNCTION
     def remove(self,key) :
@@ -38,13 +38,13 @@ t.add("march 10",100)
 # print(t.arr)      # THIS FUNCTION WILL GIVE YOU THE LIST WITH STORED VALUES
 
 
-t.get("march 9")
-t.get("march 8")
-t.get("march 7")
+print(t.get("march 7"))
+print(t.get("march 8"))
+print(t.get("march 9"))
 
 t.remove("march 8")
 print(t.arr)
-t.get("march 8")
+print(t.get("march 8"))
 
 # SINCE DICTIONARY IS IMPLEMENTED USING HASH TAABLE
 # WE CAN ALSO IMPLEMENT DICTIONARY USING HASH TABLE WITH HELP OF SPECIAL INBUILT FEATURES.
