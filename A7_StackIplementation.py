@@ -1,11 +1,9 @@
 # STACK ARRAY IMPLEMENTATION
-from A1_ArrayImplementation import DynamicArray
-
 print("STACK ARRAY IMPLEMENTATION\n")
-class Stack :
+class StackArr :
     def __init__ (self,size) :
         self.size = size
-        self.arr = DynamicArray(size)
+        self.arr = [None] * size
         self.TOP = -1
     
     def isFull(self) :
@@ -60,7 +58,7 @@ class Stack :
     
 
 
-s = Stack(5)
+s = StackArr(5)
 print("Pushed :",s.push(100))
 print("Pushed :",s.push(200))
 print("Pushed :",s.push(300))
@@ -87,4 +85,77 @@ s.display()
 
 
 # STACK LL IMPLEMENTATION
-print("STACK LL IMPLEMENTATION\n")
+print("\nSTACK LL IMPLEMENTATION\n")
+class Node :
+    def __init__(self,data) :
+        self.data = data
+        self.next = None 
+
+class StackLL :
+    def __init__(self) :
+        self.top = None       # which will be our head
+        self.count = 0
+
+    def isEmpty(self) :
+        if self.top is None :
+            return True
+        else :
+            return False
+    
+    def display(self) :
+        if self.isEmpty() :
+            print("Stack Underflow !\n")
+            return
+        itr = self.top
+        while itr :
+            print(itr.data)
+            itr = itr.next
+    
+    def push(self,data) :
+        node = Node(data)
+        node.next = self.top
+        self.top = node
+        self.count += 1
+        return self.top.data
+    
+    def pop(self) :
+        if self.isEmpty() :
+            raise Exception("Stack Underflow !")
+        
+        value = self.top.data
+        self.top = self.top.next
+        self.count -= 1
+        return value
+    
+    def peek(self) :
+        if self.isEmpty() :
+            raise Exception("Stack Underflow !")
+
+        return self.top.data
+    
+    def get_size(self) :
+        return self.count
+
+    def clear(self) :
+        self.top = None
+        self.count = 0
+
+sl = StackLL()
+print("Pushed :",sl.push(1))
+print("Pushed :",sl.push(2))
+print("Pushed :",sl.push(3))
+print("Pushed :",sl.push(4))
+print("Pushed :",sl.push(5))
+
+sl.display()
+
+print("Popped :",sl.pop())
+print("Popped :",sl.pop())
+print("Popped :",sl.pop())
+sl.display()
+
+print("Topmost element :", sl.peek())
+print("No. of element :",sl.get_size())
+
+sl.clear()
+sl.display()
