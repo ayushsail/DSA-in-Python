@@ -183,7 +183,6 @@ Old Capacity = 10
 
 New Capacity = 20
 
-So total Capacity = 30
 ```
 
 ---
@@ -280,6 +279,144 @@ O(n)
 * Amortized Complexity
 
 ---
+
+---
+
+# Array Implementation
+
+To better understand how arrays work internally, I implemented both **Fixed Array** and **Dynamic Array** from scratch in Python.
+
+The implementation demonstrates how insertion, deletion, shifting, resizing, and shrinking are performed behind the scenes instead of relying on Python's built-in list methods.
+
+## Implementations
+
+### 1. Fixed Array
+
+A fixed array has a predefined capacity that cannot be changed after creation.
+
+#### Features Implemented
+
+- Constructor
+- `isEmpty()`
+- `isFull()`
+- `insert_at_begining()`
+- `insert_at_end()`
+- `insert_at(index, data)`
+- `delete_at(index)`
+- `display()`
+
+Characteristics
+
+- Fixed memory allocation
+- Fast random access
+- Insertion at end → **O(1)**
+- Insertion/deletion at beginning or middle → **O(n)** due to shifting
+- Throws **Array Overflow** when the array is full
+
+---
+
+### 2. Dynamic Array
+
+A dynamic array automatically increases or decreases its capacity depending on the number of stored elements.
+
+In addition to all operations available in the Fixed Array implementation, two new methods are introduced:
+
+- `resize()`
+- `shrink()`
+
+#### resize()
+
+When the array becomes full,
+
+```
+New Capacity = Current Capacity × 2
+```
+
+A new larger array is created, all existing elements are copied, and the old array is replaced.
+
+Example
+
+```
+Capacity = 5
+
+↓
+
+Insert 6th element
+
+↓
+
+Capacity = 10
+```
+
+---
+
+#### shrink()
+
+When the number of elements becomes less than or equal to **25%** of the current capacity,
+
+```
+New Capacity = Current Capacity ÷ 2
+```
+
+The array shrinks automatically.
+
+However, the array **never shrinks below its initial capacity**, preventing excessive resizing.
+
+Example
+
+```
+Initial Capacity = 5
+
+Capacity grows to 20
+
+↓
+
+Delete many elements
+
+↓
+
+Capacity becomes 10
+
+↓
+
+Delete more elements
+
+↓
+
+Capacity becomes 5
+
+↓
+
+No further shrinking
+```
+
+---
+
+## Complexity Comparison
+
+| Operation | Fixed Array | Dynamic Array |
+|-----------|-------------|---------------|
+| Access | O(1) | O(1) |
+| Update | O(1) | O(1) |
+| Search | O(n) | O(n) |
+| Insert at End | O(1) | Amortized O(1) |
+| Insert at Beginning | O(n) | O(n) |
+| Insert at Index | O(n) | O(n) |
+| Delete | O(n) | O(n) |
+| Resize | Not Applicable | O(n) |
+| Shrink | Not Applicable | O(n) |
+
+---
+
+## Source Code
+
+the source code contains:
+
+- Fixed Array implementation
+- Dynamic Array implementation
+- Automatic resizing
+- Automatic shrinking
+- Sample test cases demonstrating all operations
 
 ## Advantages of Arrays
 

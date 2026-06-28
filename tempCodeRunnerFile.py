@@ -1,1 +1,0 @@
-print(t.get_probe_range(2))

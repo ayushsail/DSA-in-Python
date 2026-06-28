@@ -1,9 +1,11 @@
 # STACK ARRAY IMPLEMENTATION
+from A1_ArrayImplementation import DynamicArray
+
 print("STACK ARRAY IMPLEMENTATION\n")
 class Stack :
     def __init__ (self,size) :
         self.size = size
-        self.arr = [None] * size
+        self.arr = DynamicArray(size)
         self.TOP = -1
     
     def isFull(self) :
