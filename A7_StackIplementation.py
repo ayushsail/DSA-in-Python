@@ -58,30 +58,32 @@ class StackArr :
     
 
 
-s = StackArr(5)
-print("Pushed :",s.push(100))
-print("Pushed :",s.push(200))
-print("Pushed :",s.push(300))
-print("Pushed :",s.push(400))
-print("Pushed :",s.push(500))
-print(s.arr)
+sa = StackArr(5)
+print("Pushed :",sa.push(100))
+print("Pushed :",sa.push(200))
+print("Pushed :",sa.push(300))
+print("Pushed :",sa.push(400))
+print("Pushed :",sa.push(500))
+print(sa.arr)
 
-print("Popped :",s.pop())
-print("Popped :",s.pop())
-print("Popped :",s.pop())
-print(s.arr)
+print("Popped :",sa.pop())
+print("Popped :",sa.pop())
+print("Popped :",sa.pop())
+print(sa.arr)
 
-print("Topmost element :",s.peek())
+print("Topmost element :",sa.peek())
 
-print("No. of element :",s.get_size())
+print("No. of element :",sa.get_size())
 
-print("Pushed :",s.push(300))
-print("Pushed :",s.push(400))
-print("Pushed :",s.push(500))
-s.display()
+print("Pushed :",sa.push(300))
+print("Pushed :",sa.push(400))
+print("Pushed :",sa.push(500))
+sa.display()
 
-s.clear()
-s.display()
+sa.clear()
+sa.display()
+
+
 
 
 # STACK LL IMPLEMENTATION
@@ -159,3 +161,62 @@ print("No. of element :",sl.get_size())
 
 sl.clear()
 sl.display()
+
+
+
+
+# STACK IMPLEMENTATION USING CLASS COLLECTION.DEQUE 
+# this is the recommended way in python
+# deques are generalization of stack & queues
+# deques are implemented using doubly LL
+print("\nSTACK DEQUE IMPLEMENTATION\n")
+from collections import deque
+stack = deque()
+# print(dir(stack))   # this will show you all the methods
+
+class Stack :
+    def __init__(self) :
+        self.container = deque()
+    
+    def push(self,data) :
+        self.container.append(data)
+        return data
+    
+    def pop(self) :
+        return self.container.pop()
+        
+    def peek(self) :
+         return self.container[-1]
+
+    def isEmpty(self) :
+        return len(self.container) == 0
+    
+    def size(self) :
+        return len(self.container)
+    
+    def display(self) :
+        print(self.container)
+    
+
+sq = Stack()
+print("Pushed :",sq.push(100))
+print("Pushed :",sq.push(200))
+print("Pushed :",sq.push(300))  
+print("Pushed :",sq.push(400))
+print("Pushed :",sq.push(500))
+sq.display()
+
+print("Popped :",sq.pop())
+print("Popped :",sq.pop())
+sq.display()
+
+print("Empty :",sq.isEmpty())
+print("No. of element :",sq.size())
+
+print("Popped :",sq.pop())
+print("Popped :",sq.pop())
+print("Popped :",sq.pop())
+sq.display()
+
+print("Empty :",sq.isEmpty())
+

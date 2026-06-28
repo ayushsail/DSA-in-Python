@@ -1,51 +1,51 @@
-# # (1) nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
+# (1) nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
 
-# #   (a) What was the average temperature in first week of Jan
+#   (a) What was the average temperature in first week of Jan
 
-# #   (b) What was the maximum temperature in first 10 days of Jan
+#   (b) What was the maximum temperature in first 10 days of Jan
 
-# #   Figure out data structure that is best for this problem
-# import csv
+#   Figure out data structure that is best for this problem
+import csv
 
-# arr = []
-# with open("nyc_weather.csv","r") as f :
-#     line = csv.reader(f)
-#     next(line)
-#     for row in line :
-#         temp = int(row[1])
-#         arr.append(temp)
+arr = []
+with open("nyc_weather.csv","r") as f :
+    line = csv.reader(f)
+    next(line)
+    for row in line :
+        temp = int(row[1])
+        arr.append(temp)
 
-# print(arr)
-# print("the average temp in first week of Jan is",(sum(arr[0:6])/len(arr[0:6])),"degree")
-# print("The maximum temp in first 10 days of Jan is",(max(arr)),"degree")
+print(arr)
+print("the average temp in first week of Jan is",(sum(arr[0:6])/len(arr[0:6])),"degree")
+print("The maximum temp in first 10 days of Jan is",(max(arr)),"degree")
 
-# # The best data structure to use here was a list because all we wanted was access of temperature elements
-
-
-# # (2) nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
-
-# #   (a) What was the temperature on Jan 9?
-
-# #   (b) What was the temperature on Jan 4?
-
-# #   Figure out data structure that is best for this 
+# The best data structure to use here was a list because all we wanted was access of temperature elements
 
 
-# weather_dict = {}
-# with open("nyc_weather.csv","r") as f :
-#     line = csv.reader(f)
-#     next(line)
-#     for row in line :
-#         date = row[0]
-#         temp = int(row[1])
-#         weather_dict[date] = temp
+# (2) nyc_weather.csv contains new york city weather for first few days in the month of January. Write a program that can answer following,
 
-# print(weather_dict)
+#   (a) What was the temperature on Jan 9?
 
-# print(weather_dict["Jan 9"],"degree")
-# print(weather_dict["Jan 4"],"degree")
+#   (b) What was the temperature on Jan 4?
 
-# # The best data structure to use here was a dictionary (internally a hash table) because we wanted to know temperature for specific day, requiring key, value pair access where you can look up an element by day using O(1) complexity
+#   Figure out data structure that is best for this 
+
+
+weather_dict = {}
+with open("nyc_weather.csv","r") as f :
+    line = csv.reader(f)
+    next(line)
+    for row in line :
+        date = row[0]
+        temp = int(row[1])
+        weather_dict[date] = temp
+
+print(weather_dict)
+
+print(weather_dict["Jan 9"],"degree")
+print(weather_dict["Jan 4"],"degree")
+
+# The best data structure to use here was a dictionary (internally a hash table) because we wanted to know temperature for specific day, requiring key, value pair access where you can look up an element by day using O(1) complexity
 
 
 
