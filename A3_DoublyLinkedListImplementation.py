@@ -214,35 +214,35 @@ class DoublyLinkedList :
 
         print(dllstr)
 
+ 
+if __name__ == "__main__" :
+    dll = DoublyLinkedList()
+    dll.insert_at_begining(10)
+    dll.insert_at_begining(20)
+    dll.insert_at_end(30)
+    dll.insert_at_end(40)
+    dll.display()
+    print("Lenght :",dll.len_of_dll())
 
+    dll.insert_at(3,50)
+    dll.display()
+    print("Lenght :",dll.len_of_dll())
 
-dll = DoublyLinkedList()
-dll.insert_at_begining(10)
-dll.insert_at_begining(20)
-dll.insert_at_end(30)
-dll.insert_at_end(40)
-dll.display()
-print("Lenght :",dll.len_of_dll())
+    dll.insert_after_data(50,60)
+    dll.display()
+    print("Lenght :",dll.len_of_dll())
 
-dll.insert_at(3,50)
-dll.display()
-print("Lenght :",dll.len_of_dll())
+    dll.insert_a_list(["banana","mango","grapes","orange"])
+    dll.display()
+    print("Lenght :",dll.len_of_dll())
 
-dll.insert_after_data(50,60)
-dll.display()
-print("Lenght :",dll.len_of_dll())
+    dll.remove_at(3)
+    dll.display()
 
-dll.insert_a_list(["banana","mango","grapes","orange"])
-dll.display()
-print("Lenght :",dll.len_of_dll())
+    dll.remove_by_data("grapes")
+    dll.display()
 
-dll.remove_at(3)
-dll.display()
+    dll.insert_a_list([1,2,3,4,5,6,7,8,9])
 
-dll.remove_by_data("grapes")
-dll.display()
-
-dll.insert_a_list([1,2,3,4,5,6,7,8,9])
-
-dll.print_forward()
-dll.print_backward()
+    dll.print_forward()
+    dll.print_backward()

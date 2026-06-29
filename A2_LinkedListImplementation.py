@@ -159,30 +159,30 @@ class LinkedList :
 
 
 
+if __name__ == "__main__" :
+    ll = LinkedList()
+    ll.insert_at_begining(100)
+    ll.insert_at_begining(101)
+    ll.insert_at_end(99)
+    ll.display()
+    ll.insert_at(1,200)
+    ll.display()
+    print("Lenght :",ll.len_of_ll())
 
-ll = LinkedList()
-ll.insert_at_begining(100)
-ll.insert_at_begining(101)
-ll.insert_at_end(99)
-ll.display()
-ll.insert_at(1,200)
-ll.display()
-print("Lenght :",ll.len_of_ll())
+    ll.remove_at(3)
+    ll.display()
 
-ll.remove_at(4)
-ll.display()
+    ll.insert_a_list(["banana","mango","grapes","orange"])
+    ll.insert_after_data("mango","apple") # insert apple after mango
+    ll.display()
+    ll.remove_by_data("orange") # remove orange from linked list
+    ll.display()
+    ll.remove_by_data("figs")
+    ll.display()
+    print("Lenght :",ll.len_of_ll())
+    ll.remove_by_data("banana")
+    ll.remove_by_data("mango")
+    ll.remove_by_data("apple")
+    ll.remove_by_data("grapes")
 
-ll.insert_a_list(["banana","mango","grapes","orange"])
-ll.insert_after_data("mango","apple") # insert apple after mango
-ll.display()
-ll.remove_by_data("orange") # remove orange from linked list
-ll.display()
-ll.remove_by_data("figs")
-ll.display()
-print("Lenght :",ll.len_of_ll())
-ll.remove_by_data("banana")
-ll.remove_by_data("mango")
-ll.remove_by_data("apple")
-ll.remove_by_data("grapes")
-
-ll.display()
+    ll.display()

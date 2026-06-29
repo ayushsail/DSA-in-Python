@@ -100,31 +100,33 @@ class HashTable :
 
         return "item not found"
 
-t = HashTable()
-t.add("march 6",320)
-t.add("march 7",340)
-t.add("march 8",470)
-t.add("march 9",510)
 
-# THEY BOTH HAVE SAME HASH NUMBER(INDEX)
-print(t.get_hash("march 6"))    # 9
-print(t.get_hash("march 17"))   # 9
-print(t.arr)
+if __name__ == "__main__" :
+    t = HashTable()
+    t.add("march 6",320)
+    t.add("march 7",340)
+    t.add("march 8",470)
+    t.add("march 9",510)
 
-t.add("march 17",520)
-print(t.arr)
+    # THEY BOTH HAVE SAME HASH NUMBER(INDEX)
+    print(t.get_hash("march 6"))    # 9
+    print(t.get_hash("march 17"))   # 9
+    print(t.arr)
 
-print(t.get("march 6"))
-print(t.get("march 17"))
+    t.add("march 17",520)
+    print(t.arr)
 
-print(t.remove("march 9"))
-print(t.remove("march 17"))
-print(t.arr)    
+    print(t.get("march 6"))
+    print(t.get("march 17"))
 
-t.add("march 17",520)
-t.add("march 8",5000)
+    print(t.remove("march 9"))
+    print(t.remove("march 17"))
+    print(t.arr)    
 
-print(t.arr)
+    t.add("march 17",520)
+    t.add("march 8",5000)
+
+    print(t.arr)
 
 
 

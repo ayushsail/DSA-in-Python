@@ -39,22 +39,22 @@ class Dictionary :
     
 
 
+if __name__ == "__main__" :
+    dict = Dictionary()
+    # INPUT/OUTPUT SYNTAX IS SAME LIKE DICT
+    dict["march 6"] = 320      # calls setitem operator
+    dict["march 7"] = 340
+    dict["march 8"] = 470
+    dict["march 9"] = 510
+    dict["march 10"] = 100
 
-dict = Dictionary()
-# INPUT/OUTPUT SYNTAX IS SAME LIKE DICT
-dict["march 6"] = 320      # calls setitem operator
-dict["march 7"] = 340
-dict["march 8"] = 470
-dict["march 9"] = 510
-dict["march 10"] = 100
+    print(len(dict))        # calls len operator
 
-print(len(dict))        # calls len operator
+    print(dict["march 10"] )      # calls getitem operator
 
-print(dict["march 10"] )      # calls getitem operator
+    del dict["march 8"]    # calls delitem operator
+    print(dict["march 8"])
 
-del dict["march 8"]    # calls delitem operator
-print(dict["march 8"])
+    print(len(dict))
 
-print(len(dict))
-
-print(dict.arr)
+    print(dict.arr)

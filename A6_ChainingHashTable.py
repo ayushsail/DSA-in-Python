@@ -40,23 +40,24 @@ class HashTable :
                 del self.arr[h][index]
 
 
-t = HashTable()
-t.add("march 6",320)
-t.add("march 7",340)
-t.add("march 8",470)
-t.add("march 9",510)
+if __name__ == "__main__" :
+    t = HashTable()
+    t.add("march 6",320)
+    t.add("march 7",340)
+    t.add("march 8",470)
+    t.add("march 9",510)
 
 
-# THEY BOTH HAVE SAME HASH NUMBER(INDEX)
-print(t.get_hash("march 6"))
-print(t.get_hash("march 17"))
+    # THEY BOTH HAVE SAME HASH NUMBER(INDEX)
+    print(t.get_hash("march 6"))
+    print(t.get_hash("march 17"))
 
-t.add("march 17",520)
+    t.add("march 17",520)
 
-print(t.get("march 6"))
-print(t.get("march 17"))
-print(t.arr)
+    print(t.get("march 6"))
+    print(t.get("march 17"))
+    print(t.arr)
 
-t.remove("march 6")
-t.remove("march 9")
-print(t.arr)    
+    t.remove("march 6")
+    t.remove("march 9")
+    print(t.arr)    

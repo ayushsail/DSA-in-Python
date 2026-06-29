@@ -1,5 +1,4 @@
 # FIXED ARRAY IMPLEMENTATION
-print("FIXED ARRAY\n")
 class FixedArray :
     def __init__ (self,size) :
         self.size = size
@@ -68,27 +67,29 @@ class FixedArray :
         self.count -= 1
         self.arr[self.count] = None
         return value
-            
-a = FixedArray(5)
-# print(a.count)
-# a.display()
-a.insert_at_begining(1)
-a.insert_at_begining(2)
-a.insert_at_end(3)
-a.insert_at_end(4)
-a.insert_at(2,100)
-print(a.delete_at(3))
-print(a.delete_at(3))
-print(a.delete_at(0))
-a.display()
-print(a.arr)
+
+
+if __name__ == "__main__"  :       
+    print("FIXED ARRAY\n")
+    a = FixedArray(5)
+    # print(a.count)
+    # a.display()
+    a.insert_at_begining(1)
+    a.insert_at_begining(2)
+    a.insert_at_end(3)
+    a.insert_at_end(4)
+    a.insert_at(2,100)
+    print(a.delete_at(3))
+    print(a.delete_at(3))
+    print(a.delete_at(0))
+    a.display()
+    print(a.arr)
 
 
  
 # DYNAMIC ARRAY IMPLEMENTATION
 # two new function called resize() and shrink() which make it dynamic
 # except this two function, it is same as fixed array
-print("\nDYNAMIC ARRAY\n")
 class DynamicArray :
     def __init__ (self,size) :
         self.size = size
@@ -181,45 +182,50 @@ class DynamicArray :
         self.shrink()           # new addition in delete_at method to make it dynamic
 
         return value
-            
-a = DynamicArray(5)
-print(a.arr)        # size = 5
 
-a.insert_at_end(1)
-a.insert_at_end(2)
-a.insert_at_end(3)
-a.insert_at_end(4)
-a.insert_at_end(5)
-a.insert_at_end(6)
 
-print(a.arr)        # size = 10
 
-a.insert_at_end(7)
-a.insert_at_end(8)
-a.insert_at_end(9)
-a.insert_at_end(10) 
-a.insert_at_end(11)
-a.insert_at_end(12)
+if __name__ == "__main__" :
+    print("\nDYNAMIC ARRAY\n")  
+    a = DynamicArray(5)
 
-print(a.arr)        # size = 20
+    print(a.arr)        # size = 5
 
-a.delete_at(0)
-a.delete_at(0)
-a.delete_at(0)
-a.delete_at(0)
-a.delete_at(0)
-a.delete_at(0)
-a.delete_at(0)
+    a.insert_at_end(1)
+    a.insert_at_end(2)
+    a.insert_at_end(3)
+    a.insert_at_end(4)
+    a.insert_at_end(5)
+    a.insert_at_end(6)
 
-print(a.arr)        # size = 10
+    print(a.arr)        # size = 10
 
-a.delete_at(0)
-a.delete_at(0)
-a.delete_at(0)
+    a.insert_at_end(7)
+    a.insert_at_end(8)
+    a.insert_at_end(9)
+    a.insert_at_end(10) 
+    a.insert_at_end(11)
+    a.insert_at_end(12)
 
-print(a.arr)        # size = 5
+    print(a.arr)        # size = 20
 
-a.delete_at(0)
-a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
 
-print(a.arr)        # now it doesn't shrink further
+    print(a.arr)        # size = 10
+
+    a.delete_at(0)
+    a.delete_at(0)
+    a.delete_at(0)
+
+    print(a.arr)        # size = 5
+
+    a.delete_at(0)
+    a.delete_at(0)
+
+    print(a.arr)        # now it doesn't shrink further

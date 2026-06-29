@@ -1,5 +1,4 @@
 # STACK ARRAY IMPLEMENTATION
-print("STACK ARRAY IMPLEMENTATION\n")
 class StackArr :
     def __init__ (self,size) :
         self.size = size
@@ -57,37 +56,37 @@ class StackArr :
 
     
 
+if __name__ == "__main__" : 
+    print("STACK ARRAY IMPLEMENTATION\n")
+    sa = StackArr(5)
+    print("Pushed :",sa.push(100))
+    print("Pushed :",sa.push(200))
+    print("Pushed :",sa.push(300))
+    print("Pushed :",sa.push(400))
+    print("Pushed :",sa.push(500))
+    print(sa.arr)
 
-sa = StackArr(5)
-print("Pushed :",sa.push(100))
-print("Pushed :",sa.push(200))
-print("Pushed :",sa.push(300))
-print("Pushed :",sa.push(400))
-print("Pushed :",sa.push(500))
-print(sa.arr)
+    print("Popped :",sa.pop())
+    print("Popped :",sa.pop())
+    print("Popped :",sa.pop())
+    print(sa.arr)
 
-print("Popped :",sa.pop())
-print("Popped :",sa.pop())
-print("Popped :",sa.pop())
-print(sa.arr)
+    print("Topmost element :",sa.peek())
 
-print("Topmost element :",sa.peek())
+    print("No. of element :",sa.get_size())
 
-print("No. of element :",sa.get_size())
+    print("Pushed :",sa.push(300))
+    print("Pushed :",sa.push(400))
+    print("Pushed :",sa.push(500))
+    sa.display()
 
-print("Pushed :",sa.push(300))
-print("Pushed :",sa.push(400))
-print("Pushed :",sa.push(500))
-sa.display()
-
-sa.clear()
-sa.display()
+    sa.clear()
+    sa.display()
 
 
 
 
 # STACK LL IMPLEMENTATION
-print("\nSTACK LL IMPLEMENTATION\n")
 class Node :
     def __init__(self,data) :
         self.data = data
@@ -142,25 +141,27 @@ class StackLL :
         self.top = None
         self.count = 0
 
-sl = StackLL()
-print("Pushed :",sl.push(1))
-print("Pushed :",sl.push(2))
-print("Pushed :",sl.push(3))
-print("Pushed :",sl.push(4))
-print("Pushed :",sl.push(5))
+if __name__ == "__main__" :
+    print("\nSTACK LL IMPLEMENTATION\n")
+    sl = StackLL()
+    print("Pushed :",sl.push(1))
+    print("Pushed :",sl.push(2))
+    print("Pushed :",sl.push(3))
+    print("Pushed :",sl.push(4))
+    print("Pushed :",sl.push(5))
 
-sl.display()
+    sl.display()
 
-print("Popped :",sl.pop())
-print("Popped :",sl.pop())
-print("Popped :",sl.pop())
-sl.display()
+    print("Popped :",sl.pop())
+    print("Popped :",sl.pop())
+    print("Popped :",sl.pop())
+    sl.display()
 
-print("Topmost element :", sl.peek())
-print("No. of element :",sl.get_size())
+    print("Topmost element :", sl.peek())
+    print("No. of element :",sl.get_size())
 
-sl.clear()
-sl.display()
+    sl.clear()
+    sl.display()
 
 
 
@@ -169,7 +170,6 @@ sl.display()
 # this is the recommended way in python
 # deques are generalization of stack & queues
 # deques are implemented using doubly LL
-print("\nSTACK DEQUE IMPLEMENTATION\n")
 from collections import deque
 stack = deque()
 # print(dir(stack))   # this will show you all the methods
@@ -198,25 +198,27 @@ class Stack :
         print(self.container)
     
 
-sq = Stack()
-print("Pushed :",sq.push(100))
-print("Pushed :",sq.push(200))
-print("Pushed :",sq.push(300))  
-print("Pushed :",sq.push(400))
-print("Pushed :",sq.push(500))
-sq.display()
+if __name__ == "__main__" :
+    print("\nSTACK DEQUE IMPLEMENTATION\n")
+    sq = Stack()
+    print("Pushed :",sq.push(100))
+    print("Pushed :",sq.push(200))
+    print("Pushed :",sq.push(300))  
+    print("Pushed :",sq.push(400))
+    print("Pushed :",sq.push(500))
+    sq.display()
 
-print("Popped :",sq.pop())
-print("Popped :",sq.pop())
-sq.display()
+    print("Popped :",sq.pop())
+    print("Popped :",sq.pop())
+    sq.display()
 
-print("Empty :",sq.isEmpty())
-print("No. of element :",sq.size())
+    print("Empty :",sq.isEmpty())
+    print("No. of element :",sq.size())
 
-print("Popped :",sq.pop())
-print("Popped :",sq.pop())
-print("Popped :",sq.pop())
-sq.display()
+    print("Popped :",sq.pop())
+    print("Popped :",sq.pop())
+    print("Popped :",sq.pop())
+    sq.display()
 
-print("Empty :",sq.isEmpty())
+    print("Empty :",sq.isEmpty())
 
