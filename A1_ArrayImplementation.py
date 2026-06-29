@@ -148,6 +148,7 @@ class DynamicArray :
     def insert_at(self,index,data) :
         if self.isFull() :
             self.resize()
+            
         if index < 0 or index > self.count :
             raise IndexError("Invalid Index")
         for i in range(self.count-1,index-1,-1) :

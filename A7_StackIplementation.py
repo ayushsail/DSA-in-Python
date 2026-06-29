@@ -23,7 +23,7 @@ class StackArr :
             raise Exception ("Stack Overflow !")
         self.TOP += 1
         self.arr[self.TOP] = data
-        return self.arr[self.TOP]
+        return data
     
     def pop(self) :
         if self.isEmpty() :
@@ -118,7 +118,7 @@ class StackLL :
         node.next = self.top
         self.top = node
         self.count += 1
-        return self.top.data
+        return data
     
     def pop(self) :
         if self.isEmpty() :

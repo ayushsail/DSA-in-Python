@@ -23,9 +23,7 @@ class HashTable :
                 break
             
         if not found :      # this is the case of key dosen't exist, so we just append it
-            self.arr[h].append((key,value))
-
-        
+            self.arr[h].append((key,value))        
 
 # GET FUNCTION
     def get(self,key) :

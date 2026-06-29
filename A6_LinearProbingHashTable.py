@@ -63,8 +63,8 @@ class HashTable :
     def get(self,key) :
         h = self.get_hash(key)
         if self.arr[h] is None :
-            print("item not found")
-            return
+            return "item not found"
+
         probe_range = self.get_probe_range(h)
         for probe_index in probe_range :
             element = self.arr[probe_index]
@@ -83,14 +83,13 @@ class HashTable :
     def remove(self,key) :
         h = self.get_hash(key)
         if self.arr[h] is None :
-            print("item not found")
-            return
+            return "item not found"
+
         probe_range = self.get_probe_range(h)
         for probe_index in probe_range :
             element = self.arr[probe_index]
             if element is None :
-                print("item not found")
-                return
+                return "item not found"
 
             if element is self.DELETED :
                 continue
@@ -99,7 +98,7 @@ class HashTable :
                 self.arr[probe_index] = self.DELETED
                 return
 
-        print("item not found")
+        return "item not found"
 
 t = HashTable()
 t.add("march 6",320)
@@ -118,8 +117,8 @@ print(t.arr)
 print(t.get("march 6"))
 print(t.get("march 17"))
 
-t.remove("march 9")
-t.remove("march 17")
+print(t.remove("march 9"))
+print(t.remove("march 17"))
 print(t.arr)    
 
 t.add("march 17",520)

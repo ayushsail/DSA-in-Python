@@ -1,45 +1,94 @@
-from collections import deque
-class Stack :
-    def __init__(self) :
-        self.container = deque()
+from A1_ArrayImplementation import DynamicArray
+
+# STACK ARRAY IMPLEMENTATION
+print("STACK ARRAY IMPLEMENTATION\n")
+class StackArr :
+    def __init__ (self,size) :
+        self.size = size
+        self.arr = DynamicArray(size)
+        self.TOP = -1
     
+    # def isFull(self) :
+    #     if self.TOP == self.size -1 :
+    #         return True
+    #     else :
+    #         return False
+    
+    # def isEmpty(self) :
+    #     if self.TOP == -1 :
+    #         return True
+    #     else :
+    #         return False
+        
     def push(self,data) :
-        self.container.append(data)
+        if self.isFull() :
+            raise Exception ("Stack Overflow !")
+        self.TOP += 1
+        self.arr[self.TOP] = data
         return data
     
     def pop(self) :
-        return self.container.pop()
+        if self.isEmpty() :
+            raise Exception ("Stack Underflow !")
+        
+        value = self.arr[self.TOP]
+        self.arr[self.TOP] = None
+        self.TOP -= 1
+        return value
     
-    def size(self) :
-        return len(self.container)
+    def peek(self) :
+        if self.isEmpty() :
+            raise Exception ("Stack Underflow !")
+        
+        return self.arr[self.TOP]
     
-    def ismatch(self,ch1,ch2) :
-        obj = {
-            ')' : '(',
-            '}' : '{',
-            ']' : '['
-        }
-        return obj[ch1] == ch2
+    def get_size(self) :
+        return self.TOP + 1
     
-    def isBalance(self,data) :
-        for i in data :
-            if i == '{' or i == '(' or i == '[' :
-                self.push(i)
+    def display(self) :
+        if self.isEmpty() :
+            print("Stack Underflow !")
+            return
+        
+        for i in range(self.TOP,-1,-1) :
+            print(self.arr[i])
+    
+    def clear(self) :
+        self.arr = [None] * self.size
+        self.TOP = -1
 
-            if i == '}' or i == ')' or i == ']' :
-                if self.size() == 0 :
-                    return False
-                
-                if not self.ismatch(i,self.pop()) :
-                    return False
+    
 
-        return self.size() == 0
 
-p = Stack()
-print(p.isBalance("{([])}"))
-print(p.isBalance("({a+b})"))
-print(p.isBalance("))((a+b}{"))
-print(p.isBalance("((a+b))"))
-print(p.isBalance("((a+g))"))
-print(p.isBalance("))"))
-print(p.isBalance("[a+b]*(x+2y)*{gg+kk}"))
+s = StackArr(5)
+
+
+
+
+
+
+
+
+# print("Pushed :",sa.push(100))
+# print("Pushed :",sa.push(200))
+# print("Pushed :",sa.push(300))
+# print("Pushed :",sa.push(400))
+# print("Pushed :",sa.push(500))
+# print(sa.arr)
+
+# print("Popped :",sa.pop())
+# print("Popped :",sa.pop())
+# print("Popped :",sa.pop())
+# print(sa.arr)
+
+# print("Topmost element :",sa.peek())
+
+# print("No. of element :",sa.get_size())
+
+# print("Pushed :",sa.push(300))
+# print("Pushed :",sa.push(400))
+# print("Pushed :",sa.push(500))
+# sa.display()
+
+# sa.clear()
+# sa.display()

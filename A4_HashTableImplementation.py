@@ -2,7 +2,7 @@
 class HashTable :
     def __init__(self) :
         self.MAX = 50
-        self.arr = [None for i in range(self.MAX)]      # LIST COMPREHENSION
+        self.arr = [None] * self.MAX      # LIST COMPREHENSION
 
 # HASH FUNCTION
     def get_hash(self,key) :
