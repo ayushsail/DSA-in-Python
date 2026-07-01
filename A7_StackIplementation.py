@@ -171,8 +171,6 @@ if __name__ == "__main__" :
 # deques are generalization of stack & queues
 # deques are implemented using doubly LL
 from collections import deque
-stack = deque()
-# print(dir(stack))   # this will show you all the methods
 
 class Stack :
     def __init__(self) :
@@ -199,7 +197,7 @@ class Stack :
     
 
 if __name__ == "__main__" :
-    print("\nSTACK DEQUE IMPLEMENTATION\n")
+    print("\nSTACK USING COLLECTION.DEQUE\n")
     sq = Stack()
     print("Pushed :",sq.push(100))
     print("Pushed :",sq.push(200))
@@ -222,3 +220,5 @@ if __name__ == "__main__" :
 
     print("Empty :",sq.isEmpty())
 
+
+print(dir(Stack))   # this will show you all the methods
