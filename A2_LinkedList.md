@@ -837,6 +837,389 @@ Space : O(1)
 
 ---
 
+---
+
+# Circular Linked List (CLL)
+
+## What is a Circular Linked List?
+
+A **Circular Linked List (CLL)** is a variation of a Singly Linked List in which the **last node points back to the first node (head)** instead of pointing to `NULL`.
+
+Unlike a normal Linked List, there is **no NULL pointer** at the end of the list.
+
+### Visualization
+
+```text
+Head
+ ↓
+1 → 2 → 3
+↑       |
+└───────┘
+```
+
+The list forms a continuous loop.
+
+---
+
+# Features of Circular Linked List
+
+- Last node points back to the Head.
+- No NULL reference exists in the list.
+- Traversal can begin from any node.
+- Efficient for cyclic operations.
+- Suitable for applications where repeated traversal is required.
+
+---
+
+# Node Structure
+
+The node structure remains the same as a Singly Linked List.
+
+```text
+┌──────────┬──────────┐
+│   Data   │   Next   │
+└──────────┴──────────┘
+```
+
+The only difference is:
+
+```text
+Last.next = Head
+```
+
+instead of
+
+```text
+Last.next = NULL
+```
+
+---
+
+# Algorithms
+
+## 1. Display
+
+### Objective
+
+Traverse the Circular Linked List exactly once and display all elements.
+
+### Algorithm
+
+### Step 1
+
+Check if the list is empty.
+
+```text
+IF head = NULL
+    THROW Exception
+```
+
+### Step 2
+
+Create an iterator.
+
+```text
+itr = head
+```
+
+### Step 3
+
+Repeat
+
+```text
+Display itr.data
+Move itr = itr.next
+```
+
+until
+
+```text
+itr == head
+```
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+## 2. Insert At Beginning
+
+### Algorithm
+
+### Case 1 : Empty List
+
+```text
+Create new node
+head = new node
+new_node.next = head
+```
+
+### Case 2 : Non-empty List
+
+1. Find the last node.
+2. Make new node point to head.
+3. Make last node point to new node.
+4. Move head to new node.
+
+### Visualization
+
+Before
+
+```text
+Head
+ ↓
+10 → 20 → 30
+↑         |
+└─────────┘
+```
+
+After inserting 5
+
+```text
+Head
+ ↓
+5 → 10 → 20 → 30
+↑              |
+└──────────────┘
+```
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+## 3. Insert At End
+
+### Algorithm
+
+### Case 1
+
+If list is empty
+
+```text
+Create node
+head = node
+node.next = head
+```
+
+### Case 2
+
+1. Find the last node.
+2. Connect new node to head.
+3. Connect last node to new node.
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+## 4. Insert At Index
+
+### Algorithm
+
+1. Validate index.
+2. If index = 0
+
+```text
+Insert At Beginning
+```
+
+3. If index = length
+
+```text
+Insert At End
+```
+
+4. Traverse to the node before the given index.
+5. Insert new node.
+
+```text
+new_node.next = itr.next
+itr.next = new_node
+```
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+## 5. Insert After Data
+
+### Algorithm
+
+1. Traverse the list.
+2. Stop when target data is found.
+3. Insert new node.
+
+```text
+new_node.next = itr.next
+itr.next = new_node
+```
+
+4. Stop when traversal reaches Head again.
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+## 6. Insert A List
+
+### Algorithm
+
+1. Delete existing list.
+
+```text
+head = NULL
+```
+
+2. Reset node count.
+
+3. Insert each element using Insert At End.
+
+### Complexity
+
+```text
+Time : O(n²)
+```
+
+---
+
+## 7. Length
+
+Simply return the maintained node count.
+
+```text
+RETURN count
+```
+
+### Complexity
+
+```text
+Time : O(1)
+```
+
+---
+
+## 8. Remove At Index
+
+### Algorithm
+
+### Case 1 : Removing Head
+
+If only one node exists
+
+```text
+head = NULL
+```
+
+Otherwise
+
+1. Find last node.
+2. Last.next = head.next
+3. Move head to next node.
+
+### Case 2 : Other Index
+
+1. Traverse to previous node.
+2. Skip target node.
+
+```text
+itr.next = itr.next.next
+```
+
+### Complexity
+
+```text
+Time : O(n)
+```
+
+---
+
+## 9. Remove By Data
+
+### Algorithm
+
+### Case 1
+
+If data is at Head
+
+1. Handle one-node case.
+2. Otherwise update last.next.
+3. Move head.
+
+### Case 2
+
+Traverse until
+
+```text
+itr.next.data == target
+```
+
+Skip target node.
+
+```text
+itr.next = itr.next.next
+```
+
+Stop when Head is reached again.
+
+### Complexity
+
+```text
+Time : O(n)
+Space: O(1)
+```
+
+---
+
+# Time Complexity
+
+| Operation | Time |
+|-----------|------|
+| Display | O(n) |
+| Insert At Beginning | O(n) |
+| Insert At End | O(n) |
+| Insert At Index | O(n) |
+| Insert After Data | O(n) |
+| Insert A List | O(n²) |
+| Length | O(1) |
+| Remove At Index | O(n) |
+| Remove By Data | O(n) |
+
+---
+
+# Applications of Circular Linked List
+
+- CPU Round Robin Scheduling
+- Circular Queues
+- Multiplayer Turn-based Games
+- Music Playlists (Repeat Mode)
+- Image Slide Shows
+- Traffic Signal Systems
+- Operating System Scheduling
+
+---
 
 # Singly LL vs Doubly LL
 
@@ -871,8 +1254,17 @@ Space : O(1)
 15. Access by index is still O(n).
 16. Print backward is a major advantage of DLL over Singly LL.
 17. DLL is commonly used in browser history, undo/redo systems, and music playlists.
+18. Last node points back to Head.
+19. There is no NULL pointer.
+20. Traversal ends when Head is reached again.
+21. A single-node CLL points to itself.
+22. Insertion and deletion at the beginning require updating the last node.
+23. Circular Linked Lists are ideal for cyclic traversal.
+24. Maintaining a tail pointer can make insertion at the beginning and end O(1).
 
 ---
 # Interview Definition
 
 > A Linked List is a dynamic linear data structure consisting of nodes, where each node stores data and a reference to the next node. Nodes are connected through pointers and are not stored in contiguous memory locations.
+
+> A Circular Linked List (CLL) is a linked list in which the last node points back to the first node (head), forming a continuous loop. Unlike a normal linked list, it has no NULL pointer at the end, allowing circular traversal of the nodes.

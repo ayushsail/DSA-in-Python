@@ -1,4 +1,4 @@
-# Doubly Linked List Algorithms
+# Doubly Linked List
 
 ## What is DLL?
 
@@ -834,6 +834,400 @@ Space : O(1)
 
 ---
 
+---
+
+# Circular Doubly Linked List (CDLL)
+
+## What is a Circular Doubly Linked List?
+
+A **Circular Doubly Linked List (CDLL)** is a Doubly Linked List in which:
+
+- The **last node's `next` points to the head**.
+- The **head node's `prev` points to the last node**.
+
+Thus, there is **no NULL pointer** at either end of the list.
+
+---
+
+# Visualization
+
+```text
+            Head
+             ↓
+10 ←→ 20 ←→ 30 ←→ 40
+↑                 ↓
+└─────────────────┘
+```
+
+Both forward and backward traversal are circular.
+
+---
+
+# Features of Circular Doubly Linked List
+
+- Each node stores **Prev, Data and Next**.
+- Last node connects back to Head.
+- Head's previous pointer points to the last node.
+- Traversal is possible in both directions.
+- No NULL pointer exists.
+- Insertions and deletions require updating both `prev` and `next` pointers.
+
+---
+
+# Node Structure
+
+```text
+┌────────┬────────┬────────┐
+│  Prev  │  Data  │  Next  │
+└────────┴────────┴────────┘
+```
+
+Unlike DLL,
+
+```text
+Head.prev = Last
+Last.next = Head
+```
+
+instead of
+
+```text
+Head.prev = NULL
+Last.next = NULL
+```
+
+---
+
+# Algorithms
+
+## 1. Display
+
+### Objective
+
+Display the CDLL from Head to Last.
+
+### Algorithm
+
+1. Check whether the list is empty.
+2. Start from Head.
+3. Print current node.
+4. Move to next node.
+5. Stop when Head is reached again.
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+## 3. Insert At Beginning
+
+### Algorithm
+
+### Case 1 : Empty List
+
+```text
+Create node
+head = node
+node.next = head
+node.prev = head
+```
+
+### Case 2 : Non-empty List
+
+1. New node's `next = head`
+2. New node's `prev = head.prev`
+3. Last node's `next = new node`
+4. Head's `prev = new node`
+5. Move head to new node
+
+### Visualization
+
+Before
+
+```text
+10 ←→ 20 ←→ 30
+↑             ↓
+└─────────────┘
+```
+
+After inserting 5
+
+```text
+5 ←→ 10 ←→ 20 ←→ 30
+↑                 ↓
+└─────────────────┘
+```
+
+### Complexity
+
+```text
+Time  : O(1)
+Space : O(1)
+```
+
+---
+
+## 4. Insert At End
+
+### Algorithm
+
+### Case 1
+
+If list is empty
+
+```text
+Create node
+head = node
+node.next = head
+node.prev = head
+```
+
+### Case 2
+
+1. New node's `next = head`
+2. New node's `prev = head.prev`
+3. Last node's `next = new node`
+4. Head's `prev = new node`
+
+### Complexity
+
+```text
+Time  : O(1)
+Space : O(1)
+```
+
+---
+
+## 5. Insert At Index
+
+### Algorithm
+
+1. Validate index.
+2. If index = 0
+
+```text
+Insert At Beginning
+```
+
+3. If index = length
+
+```text
+Insert At End
+```
+
+4. Traverse to the required position.
+5. Insert node between previous and current node.
+
+```text
+new.prev = itr.prev
+new.next = itr
+
+itr.prev.next = new
+itr.prev = new
+```
+
+### Complexity
+
+```text
+Time : O(n)
+```
+
+---
+
+## 6. Insert After Data
+
+### Algorithm
+
+1. Traverse the CDLL.
+2. Search target data.
+3. Insert node after it.
+
+```text
+new.next = itr.next
+new.prev = itr
+
+itr.next.prev = new
+itr.next = new
+```
+
+4. Stop when Head is reached again.
+
+### Complexity
+
+```text
+Time : O(n)
+```
+
+---
+
+## 7. Insert A List
+
+### Algorithm
+
+1. Delete existing CDLL.
+2. Reset count.
+3. Insert each element using Insert At End.
+
+### Complexity
+
+```text
+Time : O(n²)
+```
+
+---
+
+## 8. Length
+
+Return maintained node count.
+
+```text
+RETURN count
+```
+
+### Complexity
+
+```text
+Time : O(1)
+```
+
+---
+
+## 9. Remove At Index
+
+### Algorithm
+
+### Case 1 : Removing Head
+
+If only one node exists
+
+```text
+head = NULL
+```
+
+Otherwise
+
+```text
+head.prev.next = head.next
+head.next.prev = head.prev
+head = head.next
+```
+
+### Case 2 : Other Index
+
+Traverse to target node.
+
+Reconnect surrounding nodes.
+
+```text
+itr.prev.next = itr.next
+itr.next.prev = itr.prev
+```
+
+### Complexity
+
+```text
+Time : O(n)
+```
+
+---
+
+## 10. Remove By Data
+
+### Algorithm
+
+### Case 1
+
+Data found at Head.
+
+If only one node exists
+
+```text
+head = NULL
+```
+
+Else
+
+```text
+head.prev.next = head.next
+head.next.prev = head.prev
+head = head.next
+```
+
+### Case 2
+
+Traverse until target data is found.
+
+Reconnect neighbors.
+
+```text
+itr.prev.next = itr.next
+itr.next.prev = itr.prev
+```
+
+Stop when Head is reached again.
+
+### Complexity
+
+```text
+Time : O(n)
+```
+
+---
+## 2. Print Backward
+
+### Objective
+
+Display the CDLL from Last to Head.
+
+### Algorithm
+
+1. Check whether the list is empty.
+2. Start from `head.prev`.
+3. Print current node.
+4. Move using `prev`.
+5. Stop when the last node is reached again.
+
+### Complexity
+
+```text
+Time  : O(n)
+Space : O(1)
+```
+
+---
+
+# Time Complexity
+
+| Operation | Time |
+|-----------|------|
+| Display | O(n) |
+| Print Backward | O(n) |
+| Insert At Beginning | O(1) |
+| Insert At End | O(1) |
+| Insert At Index | O(n) |
+| Insert After Data | O(n) |
+| Insert A List | O(n²) |
+| Length | O(1) |
+| Remove At Index | O(n) |
+| Remove By Data | O(n) |
+
+---
+
+# Applications of Circular Doubly Linked List
+
+- Browser history (Forward and Backward navigation)
+- Music playlist with Previous and Next buttons
+- Image viewers
+- Undo / Redo operations
+- Round Robin scheduling
+- Circular deques
+- Operating System process scheduling
+
+---
 
 # Singly LL vs Doubly LL
 
@@ -868,5 +1262,21 @@ Space : O(1)
 15. Access by index is still O(n).
 16. Print backward is a major advantage of DLL over Singly LL.
 17. DLL is commonly used in browser history, undo/redo systems, and music playlists.
+18. Every node stores Prev, Data and Next.
+19. Last node points to Head.
+20. Head's Prev points to the Last node.
+21. No NULL pointer exists.
+22. Traversal can be performed in both directions.
+23. Insertion at beginning and end is O(1) when using `head.prev`.
+24. Deletion requires updating both `prev` and `next` pointers.
+25. A single-node CDLL points to itself through both `next` and `prev`.
+26. `head.prev` always represents the last node.
+27. CDLL combines the advantages of both Circular Linked Lists and Doubly Linked Lists.
 
 ---
+
+# Interview Definition
+
+> A Doubly Linked List (DLL) is a linear data structure in which each node contains three parts: a pointer to the previous node, the data, and a pointer to the next node. Unlike a Singly Linked List, it allows traversal in both forward and backward directions, making insertion and deletion operations more efficient when the target node is known.
+
+> A Circular Doubly Linked List (CDLL) is a doubly linked list in which the last node's `next` points to the head and the head's `prev` points to the last node, forming a closed circular structure. It supports efficient traversal in both forward and backward directions without using NULL pointers.
