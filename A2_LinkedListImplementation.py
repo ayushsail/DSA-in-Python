@@ -66,8 +66,7 @@ class LinkedList:
 
 # INSERT AT INDEX
     def insert_at(self, index, data):
-        if index < 0 or index > self.count:
-            raise IndexError("Invalid Index !")
+        if index < 0 or index > self.count: raise IndexError("Invalid Index !")
 
         if index == 0:
             self.insert_at_beginning(data)
@@ -240,7 +239,7 @@ class CLL() :
     def _get_last_node(self):
         last = self.head
 
-        while last.next != self.head:
+        while last.next is not self.head:
             last = last.next
 
         return last
@@ -403,7 +402,6 @@ class CLL() :
             self.count -= 1
             return data
         
-        
         itr = self.head
         while True :
             if itr.next.data == data :
@@ -447,7 +445,7 @@ class CLL() :
 
     
 if __name__ == "__main__" :
-    print("\nCLL IMPLEMENTATION\n")
+    print("\nCICRULAR LL IMPLEMENTATION\n")
     cl = CLL() 
     print("inserted :", cl.insert_at_beginning(3))
     print("inserted :", cl.insert_at_beginning(2))
@@ -483,4 +481,5 @@ if __name__ == "__main__" :
 
 
     print("inserted :", cl.insert_a_list(["banana","mango","grapes","orange","pineapple","guava","apple"]))
+    print("Lenght :",cl.length())
     print(cl.displayAI())
