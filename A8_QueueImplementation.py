@@ -206,7 +206,7 @@ class QueueLL :
         self.front = self.front.next
         self.count -= 1
 
-        if self.front == None :
+        if self.front is None :
             self.rear = None
         return value
     
