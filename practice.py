@@ -94,7 +94,6 @@
 # # sa.display()
 
 
-# print((4+1)%5)
 
 
 
