@@ -19,15 +19,16 @@ A tree starts with a single node called the **Root**, and every other node is co
 ## 🌳 Basic Tree Structure
 
 ```text
-                    Electronics
-               /          |       \
-              /           |        \
-             /            |         \
-            /             |          \
-        Laptop          Phone        TV
-     /   |   \            |         /  |  \
- Mac ThinkPad Surface  iPhone  Samsung LG Sony
-```
+            ________ Electronics________
+           |              |             |    
+           |              |             |
+        Laptop            |            TV
+     /   |   \            |           /  |  \
+ Mac ThinkPad Surface   Phone   Samsung LG Sony
+                          | 
+                        iPhone
+```                     
+
 
 ---
 
@@ -209,14 +210,10 @@ is a subtree.
 | Count Nodes | O(n) |
 | Count Leaf Nodes | O(n) |
 | Count Internal Nodes | O(n) |
-| Get Root | O(h) |
-| Get Path | O(h²)* |
+| Get Root | O(h) (h = height of tree) |
+| Get Path | O(h) (h = height of tree) |
 | DFS Traversal | O(n) |
 | BFS Traversal | O(n) |
-
-`h = height of tree`
-
-> **Note:** `get_path()` uses `insert(0, value)`, making it **O(h²)**. Using `append()` followed by `reverse()` reduces it to **O(h)**.
 
 ---
 
@@ -858,7 +855,7 @@ w = maximum width of tree
 | count_leaf_node | O(n) |
 | count_internal_node | O(n) |
 | get_root | O(h) |
-| get_path | O(h²) *(or O(h) with append + reverse)* |
+| get_path | O(h) |
 | clear_detach | O(k) |
 | clear_destroy | O(n) |
 | dfs_preorder | O(n) |
