@@ -3,16 +3,18 @@ class TreeNode :
         self.data = data
         self.children = []
         # each of the element in the child list will be an instance of Tree node class.
-        # child node will be an another TreeNode in it self, RECURSIVE.
+        # Stores references to all child TreeNode objects.
+        # Each child is itself a TreeNode, allowing recursive tree structures.
         self.parent = None
 
     def add_child(self, child) :
         child.parent = self
-        # here self => parent variable of TreeNode, which translates to add_child(parent, child)
-        # use this function as <parent.add_child("child")>
         self.children.append(child)
+        # Set the parent reference of the child node.
+        # which python translates it to TreeNode.add_child(root, phone)
+        # use this function as <parent.add_child("child")>, Ex. self == root, child == laptop/phone/tv
 
-    def get_level(self) :       # no. of ancestor == leve
+    def get_level(self) :       # Level = Number of ancestors from the root.
         level = 0
         p = self.parent
         while p :
@@ -32,8 +34,8 @@ class TreeNode :
         print(prefix + self.data)        # gives data
 
         if self.children :          # same as if len(self.children) > 0 :
-            for child in self.children :    # give childrens
-                child.print_tree()
+            for child in self.children :
+                child.print_tree()      # Recursively print every subtree.
 
 
 def build_tree() :
