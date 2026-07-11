@@ -27,6 +27,10 @@ class TreeNode :
 
         child.parent = self
         self.children.append(child)
+
+    def add_child_list(self,child_list) :
+        for child in child_list :
+            self.add_child(child)
     
 
 # REMOVED CHILD
@@ -202,9 +206,10 @@ if __name__ == "__main__" :
 
     # Create Laptop subtree
     laptop = TreeNode("Laptop")
-    laptop.add_child(TreeNode("Mac"))
-    laptop.add_child(TreeNode("ThinkPad"))
-    laptop.add_child(TreeNode("Surface"))
+    # laptop.add_child(TreeNode("Mac"))
+    # laptop.add_child(TreeNode("ThinkPad"))
+    # laptop.add_child(TreeNode("Surface"))
+    laptop.add_child_list([TreeNode("Mac"),TreeNode("ThinkPad"),TreeNode("Surface")])
 
     # Create Phone subtree
     phone = TreeNode("Phone")
