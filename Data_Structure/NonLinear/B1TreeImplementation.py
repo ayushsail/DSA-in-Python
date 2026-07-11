@@ -13,12 +13,18 @@ class TreeNode :
     def __repr__(self):
         return self.__str__()
     
-
 # ADD CHILD
-    def add_child(self,child) :
-        if child.parent is not None :       # duplicate case
-            raise Exception("Node already has a parent !")
-        
+    def add_child(self, child):
+
+        if not isinstance(child, TreeNode):
+            raise TypeError("Child must be a TreeNode.")
+
+        if child is self:
+            raise ValueError("A node cannot be its own child.")
+
+        if child.parent is not None:
+            raise ValueError("Node already has a parent.")
+
         child.parent = self
         self.children.append(child)
     
@@ -321,9 +327,11 @@ if __name__ == "__main__" :
     print("\nBFS - LEVEL ORDER :") 
     print(" --> ".join(result))
 
+
+
     # clear()
-    
     print("\nCLEAR TREE :\n")
+
     root.clear_detach()
     root.print_tree()
     print(laptop.children)      # has children
