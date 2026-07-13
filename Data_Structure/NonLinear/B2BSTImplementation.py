@@ -172,7 +172,7 @@ if __name__ == "__main__" :
 
     print("Search 1 :", root.search_tree(1))
     print("Search 99 :", root.search_tree(99))
-
+    
     print("Maximum :", root.find_max())
     print("Minimum :", root.find_min())
 
