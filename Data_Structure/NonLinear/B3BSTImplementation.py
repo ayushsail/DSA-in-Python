@@ -145,6 +145,14 @@ class BinarySearchTreeNode :
                 min_val = self.right.find_min()
                 self.data = min_val
                 self.right = self.right.delete(min_val)
+                
+
+            # alternate method by using left subtree's max_val
+            # else : 
+            #     # find min_val in right subtree or max_val in left subtree and replace it with self
+            #     max_val = self.left.find_max()
+            #     self.data = max_val
+            #     self.left = self.left.delete(max_val)
 
         return self
 
@@ -175,7 +183,7 @@ if __name__ == "__main__" :
     
     print("Maximum :", root.find_max())
     print("Minimum :", root.find_min())
-
+    
 
     root = root.delete(45)
     print("After Deleting 45 :", root.inorder_traversal())
