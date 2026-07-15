@@ -1,17 +1,15 @@
-# Binary Tree & Binary Search Tree (BST)
+# 🌳 Binary Tree
 
----
+## 📌 What is a Binary Tree?
 
-# 1. What is a Binary Tree?
-
-A **Binary Tree** is a non-linear hierarchical data structure in which each node can have **at most two children**.
+A **Binary Tree** is a **non-linear hierarchical data structure** in which each node can have **at most two children**.
 
 The two children are called:
 
 - Left Child
 - Right Child
 
-Unlike Linked Lists, Trees are used to represent hierarchical relationships.
+Unlike a General Tree (where a node can have any number of children stored in a list), a Binary Tree restricts every node to exactly two possible child slots — `left` and `right`. This restriction is what makes Binary Trees the foundation for more specialized structures like Binary Search Trees, Heaps, and AVL Trees.
 
 Example:
 
@@ -25,42 +23,51 @@ Example:
 
 ---
 
-# Why do we use Trees?
+# Characteristics
 
-Trees are used whenever data has a hierarchical relationship.
+- Hierarchical data structure.
+- Consists of **nodes** connected by **edges**.
+- Root node has no parent.
+- Every node (except root) has exactly one parent.
+- Every node has **at most 2 children** — left and right.
+- No cycles are allowed.
+- Connected graph.
+
+---
+
+# Why do we use Binary Trees?
+
+Binary Trees are used whenever data has a hierarchical relationship AND each element naturally branches into at most two directions.
 
 Examples:
 
-- File Explorer
-- Organization Structure
-- HTML DOM
-- Folder Structure
-- Decision Trees
-- Database Indexing
-- Binary Search Tree
-- Heaps
-- Trie
-- Expression Trees
+- File Explorer (simplified hierarchies)
+- Binary Search Trees
+- Heaps (Min-Heap / Max-Heap)
+- Expression Trees (operators have at most 2 operands)
+- Huffman Coding Trees
+- Decision Trees (binary decisions)
 
 ---
 
 # Advantages
 
-- Fast Searching
+- Fast Searching (when balanced)
 - Fast Insertion
 - Fast Deletion
 - Hierarchical Storage
 - Efficient Traversals
 - Dynamic Size
-- Better than Linked List for searching
+- Simple recursive structure — every subtree is itself a Binary Tree
 
 ---
 
 # Disadvantages
 
-- More memory than Arrays
-- Recursive algorithms can be difficult
-- Worst-case BST becomes a Linked List
+- More memory than Arrays (extra pointers per node)
+- Recursive algorithms can be difficult to reason about
+- Worst-case (skewed) tree behaves like a Linked List
+- No inherent ordering (a plain Binary Tree does not guarantee sorted data — that's what a BST adds)
 
 ---
 
@@ -78,13 +85,11 @@ A single element of a tree.
 
 ## 2. Root Node
 
-Top-most node.
+Top-most node. Only one root exists.
 
 ```text
       10
 ```
-
-Only one root exists.
 
 ---
 
@@ -98,7 +103,7 @@ Node having children.
     5
 ```
 
-10 is parent of 5.
+10 is the parent of 5.
 
 ---
 
@@ -112,7 +117,7 @@ Node connected below a parent.
     5
 ```
 
-5 is child of 10.
+5 is the child of 10.
 
 ---
 
@@ -126,10 +131,7 @@ Node having no children.
     5   20
 ```
 
-Leaf Nodes:
-
-- 5
-- 20
+Leaf Nodes: `5`, `20`
 
 ---
 
@@ -145,10 +147,7 @@ Node having at least one child.
   2
 ```
 
-Internal Nodes:
-
-- 10
-- 5
+Internal Nodes: `10`, `5`
 
 ---
 
@@ -176,7 +175,7 @@ Sequence of connected nodes.
 
 ## 9. Path Length
 
-Number of edges.
+Number of edges in a path.
 
 ```text
 10 → 5 → 2
@@ -188,7 +187,7 @@ Edges = 2
 
 ## 10. Level
 
-Distance from root.
+Distance (number of edges) from the root.
 
 ```text
         10
@@ -198,33 +197,17 @@ Distance from root.
     2
 ```
 
-Level 0
-
-```
-10
-```
-
-Level 1
-
-```
-5 20
-```
-
-Level 2
-
-```
-2
-```
+- Level 0: `10`
+- Level 1: `5, 20`
+- Level 2: `2`
 
 ---
 
 ## 11. Depth
 
-Number of edges from root to node.
+Number of edges from root to that node (same value as Level for a given node).
 
-Example:
-
-```
+```text
 Depth(root) = 0
 Depth(5) = 1
 Depth(2) = 2
@@ -234,9 +217,7 @@ Depth(2) = 2
 
 ## 12. Height of Node
 
-Longest path from that node to a leaf.
-
-Example
+Longest path (in edges) from that node down to a leaf.
 
 ```text
       10
@@ -246,23 +227,21 @@ Example
   2
 ```
 
-Height(10) = 2
-
-Height(5) = 1
-
-Height(2) = 0
+- Height(10) = 2
+- Height(5) = 1
+- Height(2) = 0
 
 ---
 
 ## 13. Height of Tree
 
-Height of Root.
+Height of the Root node.
 
 ---
 
 ## 14. Ancestors
 
-Nodes above a node.
+All nodes above a given node, up to the root.
 
 ```text
 10
@@ -272,16 +251,13 @@ Nodes above a node.
 2
 ```
 
-Ancestors of 2:
-
-- 10
-- 5
+Ancestors of `2`: `10`, `5`
 
 ---
 
 ## 15. Descendants
 
-Nodes below a node.
+All nodes below a given node.
 
 ```text
 10
@@ -291,16 +267,13 @@ Nodes below a node.
 2
 ```
 
-Descendants of 10:
-
-- 5
-- 2
+Descendants of `10`: `5`, `2`
 
 ---
 
 ## 16. Siblings
 
-Children having same parent.
+Children sharing the same parent.
 
 ```text
       10
@@ -308,13 +281,13 @@ Children having same parent.
     5   20
 ```
 
-5 and 20 are siblings.
+`5` and `20` are siblings.
 
 ---
 
 ## 17. Subtree
 
-Every node itself forms a tree.
+Every node is itself the root of its own smaller tree.
 
 ```text
       10
@@ -322,17 +295,8 @@ Every node itself forms a tree.
     5   20
 ```
 
-Subtree of 5
-
-```text
-5
-```
-
-Subtree of 20
-
-```text
-20
-```
+Subtree of `5` → `5`
+Subtree of `20` → `20`
 
 ---
 
@@ -340,116 +304,511 @@ Subtree of 20
 
 ## 1. Full Binary Tree
 
-Every node has either
-
-- 0 children
-- 2 children
-
----
+Every node has either 0 or 2 children (never just 1).
 
 ## 2. Complete Binary Tree
 
-- Every level completely filled except possibly last.
-- Last level filled from left.
-
-Used in Heaps.
-
----
+Every level is completely filled except possibly the last, and the last level is filled from left to right. Used in Heaps.
 
 ## 3. Perfect Binary Tree
 
-Every internal node has 2 children.
-
-All leaf nodes at same level.
-
----
+Every internal node has exactly 2 children, and all leaf nodes sit at the same level.
 
 ## 4. Balanced Binary Tree
 
-Height difference between left and right subtree remains small.
-
-Searching is fast.
-
-Examples:
-
-- AVL Tree
-- Red Black Tree
-
----
+Height difference between left and right subtrees stays small at every node, keeping searches fast. Examples: AVL Tree, Red-Black Tree.
 
 ## 5. Degenerate (Skewed) Tree
 
-Every node has only one child.
-
-Looks like Linked List.
-
-Worst case.
+Every node has only one child. Behaves exactly like a Linked List — the worst case.
 
 ---
 
 # Binary Tree Formulas
 
-Suppose Height = h
+Suppose Height = `h`
+
+| Quantity | Formula |
+|----------|---------|
+| Maximum Nodes | `2^(h+1) - 1` |
+| Maximum Nodes at Level L | `2^L` |
+| Maximum Leaf Nodes | `2^h` |
+| Minimum Height (for n nodes) | `⌈ log₂(n+1) ⌉ - 1` |
+| Edges | `Nodes - 1` |
+| Null Links | `n + 1` |
 
 ---
 
-Maximum Nodes
+# Time Complexity (General Binary Tree)
+
+| Operation | Complexity |
+|-----------|------------|
+| Traversal | O(n) |
+| Searching | O(n) |
+| Add Child (left/right) | O(1) |
+| Remove Child | O(1) |
+| Find | O(n) |
+| Get Height | O(n) |
+| Get Level | O(h) |
+| Get Root / Get Path | O(h) |
+| Count Nodes | O(n) |
+
+Where **h** is the height of the tree and **n** is the total number of nodes. Because a plain Binary Tree has no ordering rule, Searching and Finding must visit nodes in the worst case — unlike a BST, they cannot rely on comparisons to eliminate half the tree at each step.
+
+---
+
+# Node Structure
+
+Each node in this implementation stores four pieces of information:
+
+```python
+data
+parent
+left
+right
+```
+
+```text
+BinaryTree (Node)
+│
+├── data    → value stored in the node
+├── parent  → reference to parent node (None for root)
+├── left    → reference to left child (None if absent)
+└── right   → reference to right child (None if absent)
+```
+
+Storing a `parent` reference (unlike the BST implementation, which only tracks `left`/`right`) is what allows this Binary Tree to support upward operations like `get_root()`, `get_level()`, and `get_path()` without needing to search from the top every time.
+
+---
+
+# Implementation Algorithms
+
+## 1. Add Left / Add Right
+
+### Purpose
+
+Attach a new node as the left or right child of the current node.
+
+### Algorithm
 
 ```
-2^(h+1) - 1
+If child is not a BinaryTree instance
+    Raise Exception
+
+If child is the same object as self
+    Raise ValueError (a node cannot be its own child)
+
+If child already has a parent
+    Raise ValueError (already attached elsewhere)
+
+If the target slot (left/right) is already occupied
+    Raise ValueError
+
+Set child.parent = self
+Set self.left (or self.right) = child
+```
+
+### Time Complexity
+
+```
+O(1)
+```
+
+### Code
+
+```python
+self.left.add_left(child)   # or add_right
 ```
 
 ---
 
-Maximum Nodes at Level L
+## 2. Remove Left / Remove Right
+
+### Purpose
+
+Detach the left or right child from the current node and return it.
+
+### Algorithm
 
 ```
-2^L
+If the target slot is empty
+    Return None
+
+Store the child in a temporary variable
+Clear the child's parent reference
+Clear the slot (left/right = None)
+Return the stored child
 ```
 
----
-
-Maximum Leaf Nodes
+### Time Complexity
 
 ```
-2^h
-```
-
----
-
-Minimum Height
-
-```
-⌈ log₂(n+1) ⌉ - 1
-```
-
----
-
-Edges
-
-```
-Nodes - 1
+O(1)
 ```
 
 ---
 
-Null Links
+## 3. Display Tree
+
+### Purpose
+
+Print the tree sideways in a readable hierarchical form (right subtree on top, left subtree below, indentation shows depth).
+
+### Algorithm
 
 ```
-n + 1
+Recursively display the right subtree at level+1
+
+Print the current node, indented by level
+
+Recursively display the left subtree at level+1
 ```
 
----
-
-Time Complexity
-
-Traversal
+### Time Complexity
 
 ```
 O(n)
 ```
 
-Searching (General Binary Tree)
+---
+
+## 4. Find
+
+### Purpose
+
+Search the tree for a node containing the given data.
+
+### Algorithm
+
+```
+If current node's data matches
+    Return current node
+
+If left subtree exists
+    Search left subtree; if found, return it
+
+If right subtree exists
+    Search right subtree; if found, return it
+
+Return None
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+This is a **Preorder-style DFS search** — it checks the current node before either subtree.
+
+---
+
+## 5. Contains
+
+### Purpose
+
+Return `True`/`False` for whether the data exists in the tree.
+
+### Algorithm
+
+```
+Return find(data) is not None
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+## 6. Is Root
+
+### Purpose
+
+Check whether the current node is the root.
+
+### Algorithm
+
+```
+Return parent is None
+```
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+## 7. Is Leaf
+
+### Purpose
+
+Check whether the current node has no children.
+
+### Algorithm
+
+```
+Return left is None AND right is None
+```
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+## 8. Get Root
+
+### Purpose
+
+Return the root node, starting from any node in the tree.
+
+### Algorithm
+
+```
+Start at current node
+
+While node has a parent
+    Move to parent
+
+Return node
+```
+
+### Time Complexity
+
+```
+O(h)
+```
+
+---
+
+## 9. Get Level
+
+### Purpose
+
+Return how many ancestors exist between this node and the root.
+
+### Algorithm
+
+```
+level = 0
+p = self.parent
+
+While p is not None
+    level += 1
+    p = p.parent
+
+Return level
+```
+
+### Time Complexity
+
+```
+O(h)
+```
+
+---
+
+## 10. Get Height
+
+### Purpose
+
+Return the longest path (in edges) from this node down to a leaf.
+
+### Algorithm
+
+```
+If node is a leaf
+    Return 0
+
+left_height = height of left subtree (0 if absent)
+right_height = height of right subtree (0 if absent)
+
+Return 1 + max(left_height, right_height)
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+## 11. Get Path
+
+### Purpose
+
+Return the path from the root down to the current node as a readable string.
+
+### Algorithm
+
+```
+Start at current node
+path = []
+
+While node is not None
+    Append node.data to path
+    Move to node.parent
+
+Reverse path
+Join elements with " --> "
+```
+
+### Time Complexity
+
+```
+O(h)
+```
+
+---
+
+## 12. Count Node
+
+### Purpose
+
+Count the total number of nodes in the subtree rooted at the current node.
+
+### Algorithm
+
+```
+count = 1   (count self)
+
+If left subtree exists
+    count += left.count_node()
+
+If right subtree exists
+    count += right.count_node()
+
+Return count
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+## 13. Count Leaf Node
+
+### Purpose
+
+Count how many leaf nodes exist in the subtree.
+
+### Algorithm
+
+```
+count = 0
+
+If current node is a leaf
+    Return 1
+
+If left subtree exists
+    count += left.count_leaf_node()
+
+If right subtree exists
+    count += right.count_leaf_node()
+
+Return count
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+## 14. Count Internal Node
+
+### Purpose
+
+Count nodes that have at least one child (this includes the root, as long as it isn't a leaf).
+
+### Algorithm
+
+```
+count = 1   (count self)
+
+If current node is a leaf
+    Return 0
+
+If left subtree exists
+    count += left.count_internal_node()
+
+If right subtree exists
+    count += right.count_internal_node()
+
+Return count
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+---
+
+## 15. Clear (Detach)
+
+### Purpose
+
+Detach the current node (and its whole subtree) from its parent, without destroying the subtree itself — it still exists independently in memory.
+
+### Algorithm
+
+```
+If current node is the root
+    Raise ValueError (cannot detach root)
+
+If current node is its parent's left child
+    Set parent.left = None
+Else
+    Set parent.right = None
+
+Set self.parent = None
+```
+
+### Time Complexity
+
+```
+O(1)
+```
+
+---
+
+## 16. Clear (Destroy)
+
+### Purpose
+
+Recursively tear down an entire subtree, removing every internal reference so nothing remains connected.
+
+### Algorithm
+
+```
+If left subtree exists
+    Recursively destroy left subtree
+
+If right subtree exists
+    Recursively destroy right subtree
+
+If current node is not root
+    Detach current node from its parent
+
+Clear self.parent, self.left, self.right
+```
+
+### Time Complexity
 
 ```
 O(n)
@@ -459,349 +818,196 @@ O(n)
 
 # Tree Traversals
 
-## Inorder (LNR)
+## DFS - Inorder (LNR)
 
 ```
-Left -> Node -> Right
+Visit Left Subtree
+Visit Current Node
+Visit Right Subtree
 ```
 
-BST produces sorted order.
+For a plain Binary Tree this does **not** guarantee sorted output (that property only holds for a BST).
+
+Time: `O(n)`
 
 ---
 
-## Preorder (NLR)
+## DFS - Preorder (NLR)
 
 ```
-Node -> Left -> Right
+Visit Current Node
+Visit Left Subtree
+Visit Right Subtree
 ```
-
-Useful for copying tree.
-
----
-
-## Postorder (LRN)
-
-```
-Left -> Right -> Node
-```
-
-Useful for deleting tree.
-
----
-
-# 2. What is Binary Search Tree (BST)?
-
-A **Binary Search Tree (BST)** is a Binary Tree that follows a special ordering rule.
-
-For every node:
-
-```
-Left Subtree < Root < Right Subtree
-```
-
-Duplicates are usually not allowed (your implementation ignores duplicates).
-
-Example:
-
-```text
-          50
-        /    \
-      30      70
-     / \      / \
-   20  40   60  80
-```
-
----
-
-# Advantages of BST
-
-- Fast Searching
-- Fast Insertion
-- Fast Deletion
-- Maintains Sorted Data
-- Efficient Range Queries
-
----
-
-# Time Complexity
-
-| Operation | Average | Worst |
-|-----------|---------|--------|
-| Search | O(log n) | O(n) |
-| Insert | O(log n) | O(n) |
-| Delete | O(log n) | O(n) |
-| Find Max | O(log n) | O(n) |
-| Find Min | O(log n) | O(n) |
-| Traversal | O(n) | O(n) |
-
-Worst case occurs when BST becomes skewed.
-
----
-
-# 3. BST Implementation Algorithms
-
-## Add Node
-
-- Compare new value with current node.
-- If equal, ignore (duplicate).
-- If smaller:
-  - Move left.
-  - Create node if left is empty.
-- If greater:
-  - Move right.
-  - Create node if right is empty.
-- Continue recursively until inserted.
-
----
-
-## Search Node
-
-- Compare target with current node.
-- If equal → Found.
-- If smaller → Search left subtree.
-- If greater → Search right subtree.
-- If subtree is empty → Not Found.
-
----
-
-## Inorder Traversal (LNR)
-
-- Visit Left Subtree.
-- Visit Current Node.
-- Visit Right Subtree.
-- Returns elements in ascending order for BST.
-
----
-
-## Preorder Traversal (NLR)
-
-- Visit Current Node.
-- Visit Left Subtree.
-- Visit Right Subtree.
 
 Useful for copying or serializing a tree.
 
----
-
-## Postorder Traversal (LRN)
-
-- Visit Left Subtree.
-- Visit Right Subtree.
-- Visit Current Node.
-
-Useful for deleting/freeing a tree.
+Time: `O(n)`
 
 ---
 
-## Find Minimum
+## DFS - Postorder (LRN)
 
-- Move continuously to the left child.
-- Stop when no left child exists.
-- Return current node's value.
+```
+Visit Left Subtree
+Visit Right Subtree
+Visit Current Node
+```
 
----
+Useful for deleting/freeing a tree, since children are cleaned up before the parent.
 
-## Find Maximum
-
-- Move continuously to the right child.
-- Stop when no right child exists.
-- Return current node's value.
+Time: `O(n)`
 
 ---
 
-## Delete Node
+## BFS - Level Order
 
-There are **three deletion cases**:
+### Purpose
 
-### Case 1: Leaf Node
+Visit the tree level by level, left to right, using a Queue.
 
-- Node has no children.
-- Return `None`.
+### Algorithm
+
+```
+Create empty Queue
+Enqueue root
+
+While Queue is not empty
+    Dequeue a node
+    Visit (record) the node
+
+    If node has a left child
+        Enqueue left child
+
+    If node has a right child
+        Enqueue right child
+```
+
+### Time Complexity
+
+```
+O(n)
+```
+
+### Space Complexity
+
+```
+O(w)   where w = maximum width of the tree
+```
+
+This implementation relies on a Queue (`QueueLL`) built separately as a Linear Data Structure, imported into the Binary Tree module.
 
 ---
 
-### Case 2: One Child
+# DFS vs BFS
 
-- Return the existing child.
-- Parent automatically connects to it.
-
----
-
-### Case 3: Two Children
-
-- Find the minimum value in the right subtree (Inorder Successor).
-- Replace current node's data with successor.
-- Delete successor recursively from right subtree.
+| DFS | BFS |
+|------|------|
+| Goes deep first | Goes level by level |
+| Uses Recursion / Stack | Uses Queue |
+| Space: O(h) | Space: O(w) |
+| Good for subtree problems (height, count, path) | Good for shortest path & level-based problems |
 
 ---
 
-## Build Tree
+# Methods Implemented
 
-- Create root using first element.
-- Insert remaining elements one by one using `add_node()`.
-- Return the root node.
+- `add_left()` / `add_right()`
+- `remove_left()` / `remove_right()`
+- `display()`
+- `find()`
+- `contains()`
+- `is_root()`
+- `is_leaf()`
+- `get_root()`
+- `get_level()`
+- `get_height()`
+- `get_path()`
+- `count_node()`
+- `count_leaf_node()`
+- `count_internal_node()`
+- `inorder_traversal()`
+- `preorder_traversal()`
+- `postorder_traversal()`
+- `bfs_levelorder()`
+- `clear_detach()`
+- `clear_destroy()`
+
+---
+
+# Overall Complexity
+
+| Method | Time |
+|---------|------|
+| add_left / add_right | O(1) |
+| remove_left / remove_right | O(1) |
+| display | O(n) |
+| find | O(n) |
+| contains | O(n) |
+| is_root | O(1) |
+| is_leaf | O(1) |
+| get_root | O(h) |
+| get_level | O(h) |
+| get_height | O(n) |
+| get_path | O(h) |
+| count_node | O(n) |
+| count_leaf_node | O(n) |
+| count_internal_node | O(n) |
+| inorder / preorder / postorder | O(n) |
+| bfs_levelorder | O(n) |
+| clear_detach | O(1) |
+| clear_destroy | O(n) |
+
+Where **h** is the height and **n** is the total number of nodes.
 
 ---
 
 # Important Expressions
 
-## Recursive Left Search
+## Recursive Left/Right Attachment
 
 ```python
-self.left = self.left.delete(data)
+child.parent = self
+self.left = child
 ```
 
----
-
-## Recursive Right Search
+## Detach a Subtree Without Destroying It
 
 ```python
-self.right = self.right.delete(data)
+node.clear_detach()
 ```
 
----
-
-## Replace Node with Right Child
+## Recursive Height Formula
 
 ```python
-return self.right
+return 1 + max(left_height, right_height)
 ```
 
----
-
-## Replace Node with Left Child
+## Building a Path to Root
 
 ```python
-return self.left
+path.reverse()
+return " --> ".join(map(str, path))
 ```
 
 ---
 
-## Delete Leaf
+# Applications
 
-```python
-return None
-```
-
----
-
-## Find Inorder Successor
-
-```python
-min_val = self.right.find_min()
-```
+- File Explorer / Directory-like structures
+- Binary Search Trees
+- Heaps (Min-Heap / Max-Heap)
+- Expression Trees (arithmetic parsing)
+- Huffman Coding Trees
+- Decision Trees with binary outcomes
+- Game trees (binary branching decisions)
 
 ---
 
-## Replace Data
+# Recursive Nature
 
-```python
-self.data = min_val
-```
+Almost every Binary Tree operation is naturally recursive, because a subtree rooted at any node is itself a valid Binary Tree — the same algorithm applied to a smaller instance of the same problem.
 
 ---
 
-## Delete Successor
-
-```python
-self.right = self.right.delete(min_val)
-```
-
----
-
-## Update Root After Deletion
-
-Always write:
-
-```python
-root = root.delete(value)
-```
-
-Reason:
-
-- If the root changes, the returned node becomes the new root.
-- If the root does not change, the same root is returned.
-
----
-
-# Extra Required Information
-
-## Duplicate Handling
-
-Your implementation ignores duplicate values:
-
-```python
-if self.data == data:
-    return
-```
-
----
-
-## BST Property
-
-Every node satisfies:
-
-```
-Left < Node < Right
-```
-
----
-
-## Why Inorder Gives Sorted Order?
-
-Because BST always visits:
-
-```
-Left
-↓
-
-Node
-↓
-
-Right
-```
-
-which naturally processes values in ascending order.
-
----
-
-## Why Build Tree Uses First Element?
-
-The first element becomes the root.
-
-Every remaining element is inserted according to BST rules.
-
----
-
-## Recursive Nature
-
-Most BST operations are naturally recursive because every subtree is itself a BST.
-
----
-
-## Applications of BST
-
-- Searching data
-- Database indexing
-- Symbol tables
-- File systems
-- Dictionary implementation
-- Range searching
-- Auto-complete systems (variants)
-- In-memory ordered collections
-
----
-
-# Complexity Summary
-
-| Operation | Time |
-|-----------|------|
-| Insert | O(log n) average |
-| Search | O(log n) average |
-| Delete | O(log n) average |
-| Find Min | O(log n) |
-| Find Max | O(log n) |
-| Traversals | O(n) |
-| Space (Recursive Stack) | O(h) |
-
-Where **h** is the height of the tree.
+> **Note:** This implementation is a **plain Binary Tree**, meaning nodes are attached manually via `add_left()` / `add_right()` with no ordering rule enforced. A **Binary Search Tree (BST)** builds on this same node shape but adds the constraint `Left < Node < Right`, which is documented separately.

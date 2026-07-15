@@ -76,13 +76,23 @@ class TreeNode :
 # CONTAIN DATA - same like find(), just return True/False
     def contains(self,data) :
         return self.find(data) is not None
-    
+
+# IS ROOT
     def is_root(self) :
         return self.parent is None
     
+# IS LEAF
     def is_leaf(self) :
         return not self.children    # or len(self.children == 0)
     
+
+# GET ROOT - return root form any node
+    def get_root(self) :
+        node = self 
+        while node.parent :
+            node = node.parent
+        return node
+
 
 # GET LEVEL - level == No. of ancestor from root
     def get_level(self) :
@@ -106,6 +116,18 @@ class TreeNode :
         
         return 1 + max_height
 
+
+# GET PATH - return path from node to the root
+    def get_path(self) :
+        node = self
+        path = []
+        while node:
+            path.append(node.data)
+            node = node.parent
+        
+        path.reverse()
+        return " --> ".join(path)
+    
 
 # COUNT NODE - total number of nodes in the subtree rooted at the current node.
     def count_node(self) :
@@ -139,26 +161,6 @@ class TreeNode :
         return count
     
 
-# GET ROOT - return root form any node
-    def get_root(self) :
-        node = self 
-        while node.parent :
-            node = node.parent
-        return node
-    
-
-# GET PATH - return path from node to the root
-    def get_path(self) :
-        node = self
-        path = []
-        while node:
-            path.append(node.data)
-            node = node.parent
-        
-        path.reverse()
-        return " --> ".join(path)
-
-
 # DEPTH FIRST SERACH (DFS) - PREORDER - visit parent before children
     def dfs_preorder(self,result) :
         result.append(self.data)        # visit before
@@ -185,6 +187,12 @@ class TreeNode :
                 q.enqueue(child)
             
         
+# CLEAR DETACH - it detach the subtree from root, subtree still exist
+    def clear_detach(self) :       # detach subtree
+        for child in self.children :
+            child.parent = None
+        self.children.clear()
+        
 # CLEAR DESTROY - it detach each node from their parent, subtree do not exist
     def clear_destroy(self) :       # destroy subtree
         for child in self.children :
@@ -192,11 +200,6 @@ class TreeNode :
             child.parent = None
         self.children.clear()
 
-# CLEAR DETACH - it detach the subtree from root, subtree still exist
-    def clear_detach(self) :       # detach subtree
-        for child in self.children :
-            child.parent = None
-        self.children.clear()
         
 
 
@@ -289,6 +292,19 @@ if __name__ == "__main__" :
     print(f"height of {root.find("Mac")} :", root.find("Mac").get_height())
     print(f"height of {root.find("Laptop")} :", root.find("Laptop").get_height())
 
+    # get_root()
+    print(f"root of {root.find("Mac")} :", root.find("Mac").get_root())
+    print(f"root of {root.find("Phone")} :", root.find("Phone").get_root())
+
+    # get_level()
+    print(f"level of {root.find("Mac")} :",root.find("Mac").get_level())
+    print(f"level of {root.find("Phone")} :",root.find("Phone").get_level())
+    print(f"level of {root} :",root.get_level())
+
+    # get_path()
+    print(f"path from {root.find("Mac")} :", root.find("Mac").get_path())
+    print(f"path from {root.find("Sony")} :", root.find("Sony").get_path())
+
     # count_node()
     print(f"number of nodes from {root} :", root.count_node())
     print(f"number of nodes from {root.find("Laptop")} :",root.find("Laptop").count_node())
@@ -304,13 +320,6 @@ if __name__ == "__main__" :
     print(f"count of internal nodes from {root.find("Laptop")} :",root.find("Laptop").count_internal_node())
     print(f"count of internal nodes from {root.find("Mac")} :",root.find("Mac").count_internal_node())
 
-    # get_root()
-    print(f"root of {root.find("Mac")} :", root.find("Mac").get_root())
-    print(f"root of {root.find("Phone")} :", root.find("Phone").get_root())
-
-    # get_path()
-    print(f"path from {root.find("Mac")} :", root.find("Mac").get_path())
-    print(f"path from {root.find("Sony")} :", root.find("Sony").get_path())
 
 
 
@@ -338,9 +347,14 @@ if __name__ == "__main__" :
     print("\nCLEAR TREE :\n")
 
     root.clear_detach()
+    print("\nAfter removing all childrens for root :")
     root.print_tree()
-    print(laptop.children)      # has children
+    print("\nChildren of Laptop :", laptop.children)      # has children
 
-    root.clear_destroy()
-    root.print_tree()
-    print(laptop.children)      # no children
+
+    # root.clear_destroy()
+    # print("\nAfter removing all childrens for root :")
+    # root.print_tree()
+    # print("\nChildren of Laptop :", laptop.children)      # no children
+
+    
