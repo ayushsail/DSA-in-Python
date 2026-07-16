@@ -7,7 +7,7 @@ class BinarySearchTreeNode :
 
 # ADD NODE
     def add_node(self,data) :
-        if self.data == data : return       # duplicate case
+        if self.data == data : return self    # duplicate case
 
         elif data < self.data :
             # add data in left subree
