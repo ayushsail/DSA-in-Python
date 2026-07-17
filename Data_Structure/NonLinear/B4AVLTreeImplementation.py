@@ -11,8 +11,9 @@ class AVLTree :
     
     def __repr__(self):
         return str(self.data)
-    
 
+
+# DISPLAY
     def display(self,level=0) :
         
         if self.right :
@@ -23,6 +24,7 @@ class AVLTree :
 
         if self.left :
             self.left.display(level+1)
+
 
 # UPDATE HEIGHT - Update height, after performing balancing operation
     def update_height(self) :
@@ -65,17 +67,18 @@ class AVLTree :
 
 
         # updating parent of new_root, transfered_subtree & old_root
-        if old_root.parent :
-            if old_root is old_root.parent.left :
-                old_root.parent.left = new_root
-            else : old_root.parent.right = new_root
+        parent = old_root.parent
 
-            new_root.parent = old_root.parent
+        if parent:
+            if old_root is parent.left:
+                parent.left = new_root
+            else:
+                parent.right = new_root
 
-        else:
-            new_root.parent = None
+        new_root.parent = parent
 
         if transfered_subtree : transfered_subtree.parent = old_root
+
         old_root.parent = new_root
 
 
@@ -100,17 +103,18 @@ class AVLTree :
 
 
         # updating parent of new_root, transfered_subtree & old_root
-        if old_root.parent  :
-            if old_root is old_root.parent.left :
-                old_root.parent.left = new_root
-            else : old_root.parent.right = new_root
+        parent = old_root.parent
 
-            new_root.parent = old_root.parent
-        
-        else :
-            new_root.parent = None
-        
+        if parent:
+            if old_root is parent.right:
+                parent.right = new_root
+            else:
+                parent.left = new_root
+
+        new_root.parent = parent
+
         if transfered_subtree : transfered_subtree.parent = old_root
+
         old_root.parent = new_root
 
 
@@ -144,9 +148,11 @@ class AVLTree :
                 return self.left_rotate()
         
         return self
-    
+
+
+# INSERT
     def insert(self,data) :
-        if self.data == data :  return self      # duplicate case
+        if self.data == data :  ValueError("Duplicate data")    # duplicate case
 
         elif data < self.data :
             # add data in left subree
@@ -165,9 +171,10 @@ class AVLTree :
                 node = AVLTree(data)
                 node.parent = self
                 self.right = node
-        
+
         return self.rebalance()
-    
+
+
 # FIND MAX
     def find_max(self) :
         if self.right :
@@ -181,7 +188,7 @@ class AVLTree :
         if self.left :
             return self.left.find_min()
         else :
-            return self.data
+            return self
 
 
 # DELETE
@@ -215,8 +222,8 @@ class AVLTree :
             else : 
                 # find min_val in right subtree or max_val in left subtree and replace it with self
                 min_val = self.right.find_min()
-                self.data = min_val
-                self.right = self.right.delete(min_val)
+                self.data = min_val.data
+                self.right = self.right.delete(min_val.data)
     
         return self.rebalance()
 
@@ -235,18 +242,23 @@ def build_tree(elements) :
 
 if __name__ == "__main__" :
     print("\nAVL TREE IMPLEMENTATION\n")
-    elements = [34,62,6,2,34,87,45,12,24,62,2,1,65,3,88,46]
+    elements = [50,30,70,20,40,35,80,25,35,45,95,105,10]
     root = build_tree(elements)
+    print("\nORIGINAL TREE :\n")
     root.display()
 
-    root.delete(34)
+    print("\nDeleted : 80\n")
+    root = root.delete(80)
     root.display()
 
+    print("\nDeleted : 20\n")
+    root = root.delete(20)
+    root.display()
 
-        
-            
+    print("\nDeleted : 10\n")
+    root = root.delete(10)
+    root.display()
 
-
-
-
-
+    print("\nDeleted : 40\n")
+    root = root.delete(40)
+    root.display()
