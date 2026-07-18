@@ -15,7 +15,6 @@ class AVLTree :
 
 # DISPLAY
     def display(self,level=0) :
-        
         if self.right :
             self.right.display(level+1)
         
@@ -61,25 +60,21 @@ class AVLTree :
         transfered_subtree = new_root.right
 
 
-        # swapping old_root & new_root
+        # swapping root
         new_root.right = old_root
         old_root.left = transfered_subtree
 
-
-        # updating parent of new_root, transfered_subtree & old_root
         parent = old_root.parent
-
         if parent:
             if old_root is parent.left:
                 parent.left = new_root
             else:
                 parent.right = new_root
 
+        # updating parent of new_root, transfered_subtree & old_root
         new_root.parent = parent
-
-        if transfered_subtree : transfered_subtree.parent = old_root
-
         old_root.parent = new_root
+        if transfered_subtree : transfered_subtree.parent = old_root
 
 
         # update height of all nodes
@@ -97,26 +92,21 @@ class AVLTree :
         new_root = old_root.right
         transfered_subtree = new_root.left
 
-        # swapping old_root & new_root
+        # swapping root
         new_root.left = old_root
         old_root.right = transfered_subtree
 
-
-        # updating parent of new_root, transfered_subtree & old_root
         parent = old_root.parent
-
         if parent:
             if old_root is parent.right:
                 parent.right = new_root
             else:
                 parent.left = new_root
 
+        # updating parent of new_root, transfered_subtree & old_root
         new_root.parent = parent
-
-        if transfered_subtree : transfered_subtree.parent = old_root
-
         old_root.parent = new_root
-
+        if transfered_subtree : transfered_subtree.parent = old_root
 
         # update height of all nodes
         old_root.update_height()

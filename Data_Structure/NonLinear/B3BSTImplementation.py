@@ -5,6 +5,18 @@ class BinarySearchTreeNode :
         self.right = None
 
 
+# DISPLAY
+    def display(self,level=0) :
+        if self.right :
+            self.right.display(level+1)
+        
+        space = '     ' * level
+        print(f"{space} {self.data}")
+
+        if self.left :
+            self.left.display(level+1)
+
+
 # ADD NODE
     def add_node(self,data) :
         if self.data == data : return self    # duplicate case
@@ -173,6 +185,7 @@ if __name__ == "__main__" :
     print("\nBINARY TREE IMPLEMENTATION\n")
     elements = [34,62,6,2,34,87,45,12,24,62,2,1]
     root = build_tree(elements)
+    root.display()
 
     print("Preorder Traversal :", (root.preorder_traversal()))
     print("Inorder Traversal :", (root.inorder_traversal()))
@@ -187,12 +200,15 @@ if __name__ == "__main__" :
 
     root = root.delete(45)
     print("After Deleting 45 :", root.inorder_traversal())
+    root.display()
 
     root = root.delete(1)      # leaf case
     print("After Deleting 1 :", root.inorder_traversal())
+    root.display()
     
     root = root.delete(34)     # root case
     print("After Deleting 34 :", root.inorder_traversal())
+    root.display()
 
     # while deleting, incase you are deleting the root node - thus, write it like this "root = root.delete(34)"
     # So that new root is assigned again
@@ -202,6 +218,7 @@ if __name__ == "__main__" :
 
     countries = ["India","Germany","USA","China","India","UK","Brazil","France"]
     countries_tree = build_tree(countries)
+    countries_tree.display()
     print("Preorder Traversal :", (countries_tree.preorder_traversal()))
     print("Inorder Traversal :", (countries_tree.inorder_traversal()))
     print("Postorder Traversal :", (countries_tree.postorder_traversal()))
@@ -216,9 +233,12 @@ if __name__ == "__main__" :
 
     countries_tree = countries_tree.delete("USA")
     print("After Deleting USA :", countries_tree.inorder_traversal())
+    countries_tree.display()
 
     countries_tree = countries_tree.delete("Brazil")      # leaf case
     print("After Deleting Brazil :", countries_tree.inorder_traversal())
+    countries_tree.display()
     
     countries_tree = countries_tree.delete("India")     # root case
     print("After Deleting India :", countries_tree.inorder_traversal())
+    countries_tree.display()

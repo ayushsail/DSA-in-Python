@@ -58,16 +58,21 @@ Occurs when a node becomes left-heavy because of insertion/deletion in the left 
 
 ```
         A
-       /
-      B
-     /
-    C
+       /                    B
+      B     ==>           /   \
+     /                   C     A
+    C       
+      
+```
+If Node B has right subtree, then right subtree become left child of Node A
 
-↓
-
-        B
-       / \
-      C   A
+```
+        A                   B
+       /                  /   \ 
+      B     ==>          C     A  
+     /  \                     /
+    C    D                   D
+                             
 ```
 
 ---
@@ -78,23 +83,35 @@ Occurs when a node becomes right-heavy because of insertion/deletion in the righ
 
 ```
     A
-     \
-      B
-       \
+     \                     B
+      B     ==>          /   \         
+       \                A     C
         C
 
-↓
+```
+If Node B has left subtree D, then left subtree D become right child of Node A
+```
+    A                      B
+     \                   /   \   
+      B     ==>         A     C         
+    /  \                 \
+   D    C                 D
 
-      B
-     / \
-    A   C
 ```
 
 ---
 
 ## 3. LR Rotation
 
-Occurs when the imbalance is Left-Right.
+Occurs when a new node is inserted into the right subtree of the left child of the imbalanced node
+
+```
+   A                  A                  C
+  /                  /                 /   \
+ B        ==>       C         ==>     B     A
+  \                /
+   C              B    
+```
 
 Steps
 
@@ -105,7 +122,15 @@ Steps
 
 ## 4. RL Rotation
 
-Occurs when the imbalance is Right-Left.
+Occurs when a new node is inserted in right subtree of the left child of the imbalanced node
+
+```
+   A                  A                    C
+    \                  \                 /   \
+     B        ==>       C         ==>   A     B
+    /                    \     
+   C                      B    
+```
 
 Steps
 
@@ -113,7 +138,16 @@ Steps
 2. Left Rotate Root
 
 ---
+# SUMMARY TABLE
 
+| Case | Full Form | Imbalance Pattern | Rotation Required |
+| :--- | :--- | :--- | :--- |
+| **LL** | Left-Left | Left child is Left-heavy | Single **Right Rotation** |
+| **RR** | Right-Right | Right child is Right-heavy | Single **Left Rotation** |
+| **LR** | Left-Right | Left child is Right-heavy | **Left Rotation** on child, then **Right Rotation** on root |
+| **RL** | Right-Left | Right child is Left-heavy | **Right Rotation** on child, then **Left Rotation** on root |   
+
+---
 # Node Structure
 
 Each node stores
