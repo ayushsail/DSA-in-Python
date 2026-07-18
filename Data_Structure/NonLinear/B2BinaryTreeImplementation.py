@@ -118,10 +118,10 @@ class BinaryTree :
 # GET LEVEL - level == No. of ancestor from root
     def get_level(self) :
         level = 0
-        p = self.parent
-        while p :
+        node = self.parent
+        while node :
             level += 1
-            p = p.parent
+            node = node.parent
         
         return level
 

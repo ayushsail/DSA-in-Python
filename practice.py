@@ -87,7 +87,7 @@ class AVL :
         return new_root
     
     def rebalance(self) :
-        self.update_height()
+        self.update_height()        # first update height
 
         balance = self.get_balance()
 
@@ -128,8 +128,41 @@ class AVL :
                 self.right = node
 
         return self.rebalance()
-    
 
+
+    def find_max(self) :
+        if self.right : return self.right.find_max()
+        else : return self
+
+    def find_min(self) :
+        if self.left : return self.left.find_min()
+        else : return self
+
+    def delete(self,data) :
+        if data < self.data :
+            if self.left : self.left = self.left.delete(data)
+            else : return "data not found !"
+        elif data > self.data :
+            if self.right : self.right = self.right.delete(data)
+            else : return "data not found !"
+
+        else : 
+            if self.left is None and self.right is None :
+                return None
+            
+            elif self.left is None :
+                self.right.parent = self.parent
+
+            elif self.right is None :
+                self.left.parent = self.parent
+
+            else :
+                min_val = self.right.find_min()
+                self.data = min_val.data
+                self.right = self.right.delete(min_val.data)
+
+        return self.rebalance()
+            
 def build_tree(elements) :
     if not elements : return None
 
@@ -146,5 +179,30 @@ if __name__ == "__main__" :
     root = build_tree(elements)
     print("\nORIGINAL TREE :\n")
     root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
+
+
+    root = root.delete(40)
+    root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
+
+    root = root.delete(10)
+    root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
+
+    root = root.delete(35)
+    root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
+
+    root = root.delete(25)
+    root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
         
+    root = root.delete(30)
+    root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
+        
+    root = root.delete(20)
+    root.display()
+    print(f"Balance of root :{root.get_balance()}\n")
         
