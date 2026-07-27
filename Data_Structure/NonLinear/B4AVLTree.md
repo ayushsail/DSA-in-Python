@@ -52,7 +52,7 @@ Possible values:
 
 AVL Tree uses four types of rotations.
 
-## 1. LL Rotation (Right Rotation)
+## 1. LL Case (Right Rotation)
 
 Occurs when a node becomes left-heavy because of insertion/deletion in the left subtree of its left child.
 
@@ -77,7 +77,7 @@ If Node B has right subtree, then right subtree become left child of Node A
 
 ---
 
-## 2. RR Rotation (Left Rotation)
+## 2. RR Case (Left Rotation)
 
 Occurs when a node becomes right-heavy because of insertion/deletion in the right subtree of its right child.
 
@@ -101,7 +101,7 @@ If Node B has left subtree D, then left subtree D become right child of Node A
 
 ---
 
-## 3. LR Rotation
+## 3. LR Case
 
 Occurs when a new node is inserted into the right subtree of the left child of the imbalanced node
 
@@ -120,7 +120,7 @@ Steps
 
 ---
 
-## 4. RL Rotation
+## 4. RL Case
 
 Occurs when a new node is inserted in right subtree of the left child of the imbalanced node
 
