@@ -114,7 +114,13 @@ if __name__ == "__main__" :
     print("Inserted : ", root.insert("ablg"))
     print("Inserted : ", root.insert("efgh"))
 
-    print("Search : ",root.search("abcd"))
-    print("Search : ",root.search("abc"))
-    print("Search : ",root.starts_with("abc"))
-    print("Search : ",root.starts_with("lg"))
+    print("Search 'abcd' : ",root.search("abcd"))
+    print("Search 'abc' : ",root.search("abc"))
+
+    print("Starts with 'abc' : ",root.starts_with("abc"))
+    print("Starts with 'lg' : ",root.starts_with("lg"))
+
+    print("Deleted : ", root.delete("ablg"))
+    print("Deleted : ", root.delete("efgh"))
+
+    
