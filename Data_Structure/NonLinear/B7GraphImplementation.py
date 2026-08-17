@@ -4,7 +4,6 @@ class Graph :
         self.weighted = weighted
         self.graph = {}
 
-
 # ADD VERTEX
     def add_vertex(self, vertex) -> str :
         # vertex validation
@@ -90,3 +89,30 @@ class Graph :
         if not self.has_vertex(vertex) : raise ValueError("vertex does not exist !")
 
         return list(self.graph[vertex].keys())
+
+
+if __name__ == "__main__" :
+    g = Graph(True,False)
+    print("added vertex : ", g.add_vertex("a"))
+    print("added vertex : ", g.add_vertex("b"))
+    print("added vertex : ", g.add_vertex("c"))
+    print("added vertex : ", g.add_vertex("d"))
+    print("added vertex : ", g.add_vertex("e"))
+    print("added vertex : ", g.add_vertex("f"))
+
+    print("added edge : ", g.add_edge("d","a"))
+    print("added edge : ", g.add_edge("d","b"))
+    print("added edge : ", g.add_edge("d","c"))
+    print("added edge : ", g.add_edge("d","e"))
+    print("added edge : ", g.add_edge("d","f"))
+
+    print("added edge : ", g.add_edge("c","a"))
+    print("added edge : ", g.add_edge("a","b"))
+    print("added edge : ", g.add_edge("b","f"))
+    print("added edge : ", g.add_edge("e","f"))
+    print("added edge : ", g.add_edge("e","c"))
+
+
+    print("neighbour of 'd' are : ",g.get_neighbours("d"))
+
+
