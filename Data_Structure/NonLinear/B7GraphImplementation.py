@@ -1,3 +1,7 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+
 class Graph :
     def __init__(self,directed=False, weighted=False) :
         self.directed = directed
@@ -90,6 +94,37 @@ class Graph :
 
         return list(self.graph[vertex].keys())
 
+    def degree(self,vertex) -> int :
+        if vertex not in self.graph : raise ValueError("Vertex does not exist !")
+        if self.directed : raise Exception("The Graph is Directed Graph !")
+
+        return len(self.graph[vertex])
+
+
+    def inDegree(self,vertex) -> int :
+        if vertex not in self.graph : raise ValueError("Vertex does not exist !")
+        if not self.directed : raise Exception("The Graph is Undirected Graph !")
+
+        inDegree = 0
+        for othervertex in self.graph :
+            if vertex in self.graph[othervertex] :
+                inDegree += 1
+
+        return inDegree
+
+        
+    def outDegree(self,vertex) -> int :
+        if vertex not in self.graph : raise ValueError("Vertex does not exist !")
+        if not self.directed : raise Exception("The Graph is Undirected Graph !")
+
+        return len(self.graph[vertex])
+
+
+    def isEmpty(self) -> bool :
+        return not self.graph
+
+
+
 
 if __name__ == "__main__" :
     g = Graph(True,False)
@@ -111,6 +146,8 @@ if __name__ == "__main__" :
     print("added edge : ", g.add_edge("b","f"))
     print("added edge : ", g.add_edge("e","f"))
     print("added edge : ", g.add_edge("e","c"))
+
+    g.display_graph()
 
 
     print("neighbour of 'd' are : ",g.get_neighbours("d"))
