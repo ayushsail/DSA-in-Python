@@ -1,4 +1,5 @@
-from Data_Structure.Linear.A8QueueImplementation import QueueLL
+from Data_Structure.Linear.A8QueueImplementation import QueueLL             # for BFS
+from Data_Structure.Linear.A7StackIplementation import StackLL              # for DFS
 
 class Graph :
     def __init__(self,directed=False, weighted=False) :
@@ -162,6 +163,7 @@ class Graph :
         return count
 
 
+# BREADTH FIRST SEARCH
     def bfs(self, start) -> list :
         if start not in self.graph : raise ValueError("Vertex does not exist !")
 
@@ -184,11 +186,46 @@ class Graph :
         return result
 
 
+# DEPTH FIRST SEARCH
+    def dfs(self,start) -> list :
+        if start not in self.graph : raise ValueError("Vertex does not exist !")
 
+        stack = StackLL()
+        visited = set()
+        result = []
+
+        stack.push(start)
+        visited.add(start)
+
+        while not stack.isEmpty() :
+            vertex = stack.pop()
+            result.append(vertex)
+
+            for neighbour in self.graph[vertex] :
+                if neighbour not in visited :
+                    stack.push(neighbour)
+                    visited.add(neighbour)
+
+        return result
+
+
+# COMPLETE GRAPH - Checks whether every vertex is directly connected to every other vertex.
+
+# For n vertices, an undirected complete graph has exactly n(n-1)/2 edges.
+# For n vertices, an directed complete graph has exactly n(n-1) edges.
+    def is_complete(self) -> bool :
+        n = self.vertex_count()
+
+        if self.directed : 
+            return self.edge_count() == n * (n - 1)
+        else : 
+            return self.edge_count() == n * (n - 1) // 2
+
+
+    def is_connected(self) -> bool :
+        pass
 
     
-
-
 
 
 
@@ -236,6 +273,11 @@ if __name__ == "__main__" :
     print("BFS from vertex 'd' : ", g.bfs("d"))
     print("BFS from vertex 'a' : ", g.bfs("a"))
 
+    print("DFS from vertex 'd' : ", g.dfs("d"))
+    print("DFS from vertex 'a' : ", g.dfs("a"))
+
+
+    print("Is this graph a COMPLETE GRPAH : ", g.is_complete())
 
 
 
