@@ -1,6 +1,4 @@
-import networkx as nx
-import matplotlib.pyplot as plt
-
+from Data_Structure.Linear.A8QueueImplementation import QueueLL
 
 class Graph :
     def __init__(self,directed=False, weighted=False) :
@@ -80,20 +78,26 @@ class Graph :
         else : return f"{source} <--> {destination}"
 
 
+# HAS VERTEX
     def has_vertex(self,vertex) -> bool :
         return vertex in self.graph 
 
+
+# HAS EDGE
     def has_edge(self,source,destination) -> bool : 
         if source not in self.graph or destination not in self.graph:
             raise ValueError("Source or destination vertex does not exist !")
         return destination in self.graph[source]
 
 
+# GET NEIGHBOURS
     def get_neighbours(self,vertex) -> list :
         if not self.has_vertex(vertex) : raise ValueError("vertex does not exist !")
 
         return list(self.graph[vertex].keys())
 
+
+# DEGREE
     def degree(self,vertex) -> int :
         if vertex not in self.graph : raise ValueError("Vertex does not exist !")
         if self.directed : raise Exception("The Graph is Directed Graph !")
@@ -101,6 +105,7 @@ class Graph :
         return len(self.graph[vertex])
 
 
+# IN-DEGREE
     def inDegree(self,vertex) -> int :
         if vertex not in self.graph : raise ValueError("Vertex does not exist !")
         if not self.directed : raise Exception("The Graph is Undirected Graph !")
@@ -112,7 +117,8 @@ class Graph :
 
         return inDegree
 
-        
+
+# OUT-DEGREE
     def outDegree(self,vertex) -> int :
         if vertex not in self.graph : raise ValueError("Vertex does not exist !")
         if not self.directed : raise Exception("The Graph is Undirected Graph !")
@@ -120,14 +126,88 @@ class Graph :
         return len(self.graph[vertex])
 
 
+# IS-EMPTY
     def isEmpty(self) -> bool :
-        return not self.graph
+        return  not self.graph
+
+
+# DISPLAY - ADJACENCY LIST
+    def display(self) -> None :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
+
+        print("\nGraph :")
+        for vertex, neighbour in self.graph.items() :
+            print(f"{vertex} -> {list(neighbour.keys())}")
+
+        print()
+
+# DISPLAY - GRAPH
+    def display_graph(self) -> None : 
+        pass
+
+
+# VERTEX COUNT
+    def vertex_count(self) -> int :
+        return len(self.graph)
+
+
+# EDGE COUNT
+    def edge_count(self) -> int :
+        count = 0
+        for vertex in self.graph :
+            count += len(self.graph[vertex])
+
+        if not self.directed :  count //= 2 
+
+        return count
+
+
+    def bfs(self, start) -> list :
+        if start not in self.graph : raise ValueError("Vertex does not exist !")
+
+        queue = QueueLL()
+        visited = set()
+        result = []
+
+        queue.enqueue(start)
+        visited.add(start)
+
+        while not queue.isEmpty() : 
+            vertex = queue.dequeue()
+            result.append(vertex)
+
+            for neighbour in self.graph[vertex] :
+                if neighbour not in visited :
+                    queue.enqueue(neighbour)
+                    visited.add(neighbour)
+
+        return result
 
 
 
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def clear(self) -> None:
+        self.graph = {}
+    
 
 if __name__ == "__main__" :
     g = Graph(True,False)
+
     print("added vertex : ", g.add_vertex("a"))
     print("added vertex : ", g.add_vertex("b"))
     print("added vertex : ", g.add_vertex("c"))
@@ -147,9 +227,17 @@ if __name__ == "__main__" :
     print("added edge : ", g.add_edge("e","f"))
     print("added edge : ", g.add_edge("e","c"))
 
-    g.display_graph()
-
-
     print("neighbour of 'd' are : ",g.get_neighbours("d"))
+    print("vertex count : ", g.vertex_count())
+    print("edge count : ", g.edge_count())
+    g.display()
+
+
+    print("BFS from vertex 'd' : ", g.bfs("d"))
+    print("BFS from vertex 'a' : ", g.bfs("a"))
+
+
+
+
 
 

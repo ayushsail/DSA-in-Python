@@ -7,3 +7,7 @@ __pycache__/
 
 # VS Code settings
 .vscode/
+
+# Environment & build config
+.env
+pyproject.toml
