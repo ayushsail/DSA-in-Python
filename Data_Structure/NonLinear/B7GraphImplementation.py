@@ -222,8 +222,43 @@ class Graph :
             return self.edge_count() == n * (n - 1) // 2
 
 
+# CONNECTED GRAPH - checks whether all vertices in the graph belong to one connected group.
+
+# For undirected, if dfs from any vertex == total vertex count -> connected graph
+# For directed, if dfs from any vertex == reverse dfs from that vertex == total vertex count -> connected graph
     def is_connected(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
+
+        start = next(iter(self.graph))
+        lengthOfDfs = len(self.dfs(start))
+
+        # FOR UNDIRECTED GRAPH
+        if not self.directed :
+            return lengthOfDfs == self.vertex_count()
+        
+
+        # FOR DIRECTED GRAPH (strongly connected check)
+        else :
+            # create a temporary Graph
+            tempGraph = Graph(self.directed,self.weighted)
+            # add all vertices in tempGraph from main graph
+            for vertex in self.graph :
+                tempGraph.add_vertex(vertex)
+
+            # reverse every edge
+            for source in self.graph :
+                for neighbour in self.graph[source] :
+                    weight = self.graph[source][neighbour]
+                    tempGraph.add_edge(neighbour,source,weight)
+
+            lengthOfReverseDfs = len(tempGraph.dfs(start))
+
+            return lengthOfDfs == self.vertex_count() and lengthOfReverseDfs == self.vertex_count()
+
+    def is_cyclic(self) :
         pass
+
+
 
     
 
@@ -252,32 +287,30 @@ if __name__ == "__main__" :
     print("added vertex : ", g.add_vertex("e"))
     print("added vertex : ", g.add_vertex("f"))
 
-    print("added edge : ", g.add_edge("d","a"))
-    print("added edge : ", g.add_edge("d","b"))
-    print("added edge : ", g.add_edge("d","c"))
-    print("added edge : ", g.add_edge("d","e"))
-    print("added edge : ", g.add_edge("d","f"))
 
-    print("added edge : ", g.add_edge("c","a"))
     print("added edge : ", g.add_edge("a","b"))
-    print("added edge : ", g.add_edge("b","f"))
+    print("added edge : ", g.add_edge("b","c"))
+    print("added edge : ", g.add_edge("b","e"))
+    print("added edge : ", g.add_edge("c","d"))
+    print("added edge : ", g.add_edge("d","e"))
     print("added edge : ", g.add_edge("e","f"))
-    print("added edge : ", g.add_edge("e","c"))
+    print("added edge : ", g.add_edge("f","a"))
 
-    print("neighbour of 'd' are : ",g.get_neighbours("d"))
+
+    print("neighbour of 'b' are : ",g.get_neighbours("b"))
     print("vertex count : ", g.vertex_count())
     print("edge count : ", g.edge_count())
     g.display()
 
-
-    print("BFS from vertex 'd' : ", g.bfs("d"))
     print("BFS from vertex 'a' : ", g.bfs("a"))
+    print("BFS from vertex 'b' : ", g.bfs("b"))
 
-    print("DFS from vertex 'd' : ", g.dfs("d"))
+    print("\nDFS from vertex 'd' : ", g.dfs("d"))
     print("DFS from vertex 'a' : ", g.dfs("a"))
 
-
-    print("Is this graph a COMPLETE GRPAH : ", g.is_complete())
+    print("\nIs this graph a COMPLETE GRPAH : ", g.is_complete())
+    print("\nIs this graph a CONNECTED GRPAH : ", g.is_connected())
+    
 
 
 

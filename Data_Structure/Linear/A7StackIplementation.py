@@ -221,4 +221,4 @@ if __name__ == "__main__" :
     print("Empty :",sq.isEmpty())
 
 
-print(dir(Stack))   # this will show you all the methods
+    print(dir(Stack))   # this will show you all the methods
