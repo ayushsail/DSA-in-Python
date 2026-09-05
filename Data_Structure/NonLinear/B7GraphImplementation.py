@@ -255,8 +255,76 @@ class Graph :
 
             return lengthOfDfs == self.vertex_count() and lengthOfReverseDfs == self.vertex_count()
 
-    def is_cyclic(self) :
+
+# CYCLIC GRAPH - check path starting and ending at same vertex, without repeating vertices in between.
+
+# For directed, detect cycles using DFS recursion with path tracking.
+# For undirected, detect cycles using DFS with parent tracking. 
+    def is_cyclic(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
+
+        # FOR DIRECTED GRAPH
+        if self.directed :
+            visited = set()
+            current_path = set()
+
+            def dfs_directed(vertex) :
+                visited.add(vertex)
+                current_path.add(vertex)
+
+                for neighbour in self.graph[vertex] :
+
+                    # Neighbour is in current dfs path -> cyclic graph
+                    if neighbour in current_path : return True
+
+                    # Neighbour is not visited -> dfs neighbour
+                    if neighbour not in visited :
+                        if dfs_directed(neighbour) : return True
+
+                current_path.remove(vertex)
+                return False
+            
+            # Check every component
+            for vertex in self.graph :
+                if vertex not in visited :
+                        if dfs_directed(vertex) : return True
+
+
+            # FOR UNDIRECTED GRAPH
+            else :
+                visited = set()
+
+                def dfs_undirected(vertex,parent) :
+                    visited.add(vertex)
+
+                    for neighbour in self.graph[vertex] :
+
+                        # Neighbour is not visited → continue DFS
+                        if neighbour not in visited : 
+                            if dfs_undirected(neighbour, vertex) : return True
+
+                        # Neighbour is already visited and is not the parent -> Cyclic Graph
+                        elif neighbour in visited and neighbour != parent : return True
+
+                    return False
+
+                # Check every component
+                for vertex in self.graph :
+                    if vertex not in visited :   
+                        if dfs_undirected(vertex,None) : return True
+
+
+            return False
+        
+
+# BIPARTITE GRAPH - divide all vertices into 2 groups such that No two vertices in the same group have an edge.
+
+# For directed, detect cycles using DFS recursion with path tracking.
+# For undirected, detect cycles using DFS with parent tracking. 
+    def is_bipartite(self) :
         pass
+
+
 
 
 
@@ -310,6 +378,7 @@ if __name__ == "__main__" :
 
     print("\nIs this graph a COMPLETE GRPAH : ", g.is_complete())
     print("\nIs this graph a CONNECTED GRPAH : ", g.is_connected())
+    print("\nIs this graph a CYCLIC GRPAH : ", g.is_cyclic())
     
 
 
