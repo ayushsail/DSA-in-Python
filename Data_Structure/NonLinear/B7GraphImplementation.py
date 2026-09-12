@@ -1,3 +1,7 @@
+# for graph display
+import networkx as nx
+import matplotlib.pyplot as plt
+
 from Data_Structure.Linear.A8QueueImplementation import QueueLL             # for BFS
 from Data_Structure.Linear.A7StackIplementation import StackLL              # for DFS
 
@@ -6,6 +10,7 @@ class Graph :
         self.directed = directed
         self.weighted = weighted
         self.graph = {}
+
 
 # ADD VERTEX
     def add_vertex(self, vertex) -> str :
@@ -37,6 +42,13 @@ class Graph :
         # source and destination vertices validation
         if source not in self.graph : raise ValueError("Source vertex does not exist !")
         if destination not in self.graph : raise ValueError("Destination vertex does not exist !")
+
+        # same source & destination validation
+        if source == destination: raise ValueError("Self-loop is not allowed !")
+
+        # weight validation
+        if self.weighted and (not isinstance(weight, (int, float)) or isinstance(weight, bool)):
+            raise ValueError("Weight must be a number !")
 
         # edge validation
         if destination in self.graph[source] : raise ValueError("Edge already exist !")
@@ -133,21 +145,121 @@ class Graph :
 
 
 # DISPLAY - ADJACENCY LIST
-    def display(self) -> None :
-        if self.isEmpty() : raise Exception("Graph is Empty !")
+    def display(self) -> None:
+        if self.isEmpty():
+            raise Exception("Graph is Empty !")
 
         print("\nGraph :")
-        for vertex, neighbour in self.graph.items() :
-            print(f"{vertex} -> {list(neighbour.keys())}")
+
+        for vertex, neighbours in self.graph.items():
+
+            if self.weighted:
+                edge_list = []
+
+                for neighbour, weight in neighbours.items():
+                    edge_list.append(f"{neighbour}({weight})")
+
+                print(f"{vertex} -> {edge_list}")
+
+            else:
+                print(f"{vertex} -> {list(neighbours.keys())}")
 
         print()
 
+
 # DISPLAY - GRAPH
-    def display_graph(self) -> None : 
-        pass
+    def display_graph(self) -> None:
+        if self.isEmpty():
+            raise Exception("Graph is Empty !")
+
+        # Create NetworkX graph based on graph type
+        if self.directed:
+            G = nx.DiGraph()
+        else:
+            G = nx.Graph()
+
+        # Add vertices and edges
+        for vertex in self.graph:
+            G.add_node(vertex)
+
+            for neighbour in self.graph[vertex]:
+                if self.weighted:
+                    G.add_edge(
+                        vertex,
+                        neighbour,
+                        weight=self.graph[vertex][neighbour]
+                    )
+                else:
+                    G.add_edge(vertex, neighbour)
+
+        # Create better layout
+        pos = nx.spring_layout(
+            G,
+            k=2.5,
+            iterations=200,
+            seed=42
+        )
+
+        # Create figure
+        plt.figure(figsize=(12, 8))
+
+        # Draw nodes
+        nx.draw_networkx_nodes(
+            G,
+            pos,
+            node_size=1000,
+            node_color="skyblue",
+            edgecolors="black",
+            linewidths=1.5
+        )
+
+        # Draw edges
+        nx.draw_networkx_edges(
+            G,
+            pos,
+            arrows=self.directed,
+            arrowsize=20,
+            edge_color="gray",
+            width=1.8,
+            connectionstyle="arc3,rad=0.08",
+            min_source_margin=15,
+            min_target_margin=15
+        )
+
+        # Draw vertex names
+        nx.draw_networkx_labels(
+            G,
+            pos,
+            font_size=12,
+            font_weight="bold"
+        )
+
+        # Draw edge weights
+        if self.weighted:
+            edge_labels = nx.get_edge_attributes(G, "weight")
+
+            nx.draw_networkx_edge_labels(
+                G,
+                pos,
+                edge_labels=edge_labels,
+                font_size=10,
+                font_weight="bold",
+                label_pos=0.5,
+                bbox=dict(
+                    facecolor="white",
+                    edgecolor="none",
+                    alpha=0.8,
+                    pad=2
+                ),
+                rotate=False
+            )
+
+        plt.axis("off")
+        plt.tight_layout()
+        plt.show()
 
 
-# VERTEX COUNT–
+# VERTEX COUNT
     def vertex_count(self) -> int :
         return len(self.graph)
 
@@ -441,7 +553,7 @@ class Graph :
 #   - Graph must be connected
 #   - Exactly 0(eulerian circuit) or 2 vertices have odd degree
 # Directed:
-#   - Graph must be strongly connected
+#   - All vertices with edges must belong to one weakly connected component
 #   - Either:
 #       inDegree == outDegree for every vertex → Eulerian circuit
 #       0 or 1 vertex: outDegree = inDegree + 1 → starting vertex
@@ -497,28 +609,111 @@ class Graph :
             return True
 
 
+# HAMILTONIAN GRAPH - there are two things - Hamiltonian path & Hamiltonian circuit.
+# 1. Hamiltonian Path - Traverses every vertex exactly once,
+#    but does NOT necessarily return to the starting vertex.
+    def is_hamiltonian_path(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
+
+        visited = set()
+        path = []
+
+        def backtrack(vertex) :
+            # base condition
+            if len(path) == self.vertex_count() : return True
+
+            # try all neighbours 
+            for neighbour in self.graph[vertex] :
+                if neighbour not in visited :
+                    visited.add(neighbour)
+                    path.append(neighbour)
+
+                    # explore neighbour
+                    if backtrack(neighbour) : return True
+                    
+                    # backtrack and try different path
+                    else : 
+                        path.pop()
+                        visited.remove(neighbour)
+
+            # no valid path found
+            return False
+          
+
+        for vertex in self.graph :
+            # choose a starting vertex
+            visited.add(vertex)
+            path.append(vertex)
+
+            if backtrack(vertex) : return True
+
+            # backtrack and try different path
+            else :
+                path.pop()
+                visited.remove(vertex)
+
+        # no valid path found
+        return False
 
 
+# 2. Hamiltonian Circuit - Traverses every vertex exactly once
+#    and returns to the starting vertex.
+    def is_hamiltonian_circuit(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
 
-    
+        visited = set()
+        path = []
+
+        def backtrack(vertex,start) :
+            # Base condition:
+            # - Visit every vertex
+            # - Last vertex should connect back to starting vertex
+            if len(path) == self.vertex_count() : 
+                if start in self.graph[vertex] :
+                    return True
+                
+            # try all neighbours 
+            for neighbour in self.graph[vertex] :
+                if neighbour not in visited :
+                    visited.add(neighbour)
+                    path.append(neighbour)
 
 
+                    # explore neighbour
+                    if backtrack(neighbour,start) : return True
+                    
+                    # backtrack and try different path
+                    else : 
+                        path.pop()
+                        visited.remove(neighbour)
+
+            # no valid path found
+            return False
+
+        for vertex in self.graph :
+            # choose a starting vertex
+            visited.add(vertex)
+            path.append(vertex)
+
+            if backtrack(vertex,vertex) : return True
+
+            # else, undo this choice and try different path
+            else :
+                path.pop()
+                visited.remove(vertex)
+
+        # no valid path found
+        return False
 
 
-
-
-
-
-
-
-
-
+# CLEAR GRAPH
     def clear(self) -> None:
         self.graph = {}
+
     
 
 if __name__ == "__main__" :
-    g = Graph(True,False)
+    g = Graph(True,True)
 
     print("added vertex : ", g.add_vertex("a"))
     print("added vertex : ", g.add_vertex("b"))
@@ -528,25 +723,27 @@ if __name__ == "__main__" :
     print("added vertex : ", g.add_vertex("f"))
 
 
-    print("added edge : ", g.add_edge("a","b"))
-    print("added edge : ", g.add_edge("b","c"))
-    print("added edge : ", g.add_edge("b","e"))
-    print("added edge : ", g.add_edge("c","d"))
-    print("added edge : ", g.add_edge("d","e"))
-    print("added edge : ", g.add_edge("e","f"))
-    print("added edge : ", g.add_edge("f","a"))
+    print("added edge : ", g.add_edge("a","b",10))
+    print("added edge : ", g.add_edge("b","c",2))
+    print("added edge : ", g.add_edge("b","e",5))
+    print("added edge : ", g.add_edge("c","d",7))
+    print("added edge : ", g.add_edge("d","e",8))
+    print("added edge : ", g.add_edge("e","f",1))
+    print("added edge : ", g.add_edge("f","a",4))
 
 
-    # print("neighbour of 'b' are : ",g.get_neighbours("b"))
-    # print("vertex count : ", g.vertex_count())
-    # print("edge count : ", g.edge_count())
+    print("\nneighbour of 'b' are : ",g.get_neighbours("b"))
+    print("vertex count : ", g.vertex_count())
+    print("edge count : ", g.edge_count())
     g.display()
 
-    # print("BFS from vertex 'a' : ", g.bfs("a"))
-    # print("BFS from vertex 'b' : ", g.bfs("b"))
+    print("\nBFS from vertex 'a' : ", g.bfs("a"))
+    print("BFS from vertex 'b' : ", g.bfs("b"))
 
-    # print("\nDFS from vertex 'd' : ", g.dfs("d"))
-    # print("DFS from vertex 'a' : ", g.dfs("a"))
+    print("\nDFS from vertex 'd' : ", g.dfs("d"))
+    print("DFS from vertex 'a' : ", g.dfs("a"))
+    
+    g.display()
 
     print("\nIs this graph a COMPLETE GRPAH : ", g.is_complete())
     print("\nIs this graph a CONNECTED GRPAH : ", g.is_connected())
@@ -555,4 +752,7 @@ if __name__ == "__main__" :
     print("\nIs this graph a BIPARTITE GRPAH : ", g.is_bipartite())
     print("\nIs this graph has a EULERIAN CIRUIT : ", g.is_eulerian_circuit())
     print("\nIs this graph has a EULERIAN PATH : ", g.is_eulerian_path())
-    
+    print("\nIs this graph has a HAMILTONIAN CIRUIT : ", g.is_hamiltonian_circuit())
+    print("\nIs this graph has a HAMILTONIAN PATH : ", g.is_hamiltonian_path())
+
+    g.display_graph()
