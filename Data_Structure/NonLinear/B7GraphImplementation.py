@@ -147,7 +147,7 @@ class Graph :
         pass
 
 
-# VERTEX COUNT
+# VERTEX COUNT–
     def vertex_count(self) -> int :
         return len(self.graph)
 
@@ -210,7 +210,6 @@ class Graph :
 
 
 # COMPLETE GRAPH - Checks whether every vertex is directly connected to every other vertex.
-
 # For n vertices, an undirected complete graph has exactly n(n-1)/2 edges.
 # For n vertices, an directed complete graph has exactly n(n-1) edges.
     def is_complete(self) -> bool :
@@ -223,7 +222,6 @@ class Graph :
 
 
 # CONNECTED GRAPH - checks whether all vertices in the graph belong to one connected group.
-
 # For undirected, if dfs from any vertex == total vertex count -> connected graph
 # For directed, if dfs from any vertex == reverse dfs from that vertex == total vertex count -> connected graph
     def is_connected(self) -> bool :
@@ -256,8 +254,55 @@ class Graph :
             return lengthOfDfs == self.vertex_count() and lengthOfReverseDfs == self.vertex_count()
 
 
-# CYCLIC GRAPH - check path starting and ending at same vertex, without repeating vertices in between.
+# WEAKLY CONNECTED GRAPH - Check connectivity ignoring edge direction
+# - Specially for Directed graph only
+    def is_weakly_connected(self) -> bool:
+        if self.isEmpty():
+            raise Exception("Graph is Empty !")
 
+        # Find a vertex that has at least one edge
+        start = None
+        for vertex in self.graph:
+            if self.inDegree(vertex) + self.outDegree(vertex) > 0:
+                start = vertex
+                break
+
+        # No edges in the graph
+        if start is None:
+            return True
+
+        queue = QueueLL()
+        visited = set()
+
+        queue.enqueue(start)
+        visited.add(start)
+
+        while not queue.isEmpty():
+            vertex = queue.dequeue()
+
+            # Outgoing edges
+            for neighbour in self.graph[vertex]:
+                if neighbour not in visited:
+                    visited.add(neighbour)
+                    queue.enqueue(neighbour)
+
+            # Incoming edges
+            for othervertex in self.graph:
+                if vertex in self.graph[othervertex]:
+                    if othervertex not in visited:
+                        visited.add(othervertex)
+                        queue.enqueue(othervertex)
+
+        # Count vertices that actually have edges
+        edge_vertices = 0
+        for vertex in self.graph:
+            if self.inDegree(vertex) + self.outDegree(vertex) > 0:
+                edge_vertices += 1
+
+        return len(visited) == edge_vertices
+
+
+# CYCLIC GRAPH - check path starting and ending at same vertex, without repeating vertices in between.
 # For directed, detect cycles using DFS recursion with path tracking.
 # For undirected, detect cycles using DFS with parent tracking. 
     def is_cyclic(self) -> bool :
@@ -317,12 +362,139 @@ class Graph :
             return False
         
 
-# BIPARTITE GRAPH - divide all vertices into 2 groups such that No two vertices in the same group have an edge.
+# BIPARTITE GRAPH - divide all vertices into 2 groups such that no two vertices in the same group have an edge.
+# - Every pair of adjacent vertices must have opposite colors.
+# - using color as 0 and 1
+    def is_bipartite(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
 
-# For directed, detect cycles using DFS recursion with path tracking.
-# For undirected, detect cycles using DFS with parent tracking. 
-    def is_bipartite(self) :
-        pass
+        color = {}
+
+        def bfs(vertex) :
+            # assign color for the vertex
+            color[vertex] = 0
+            queue = QueueLL()
+            queue.enqueue(vertex)
+    
+            while not queue.isEmpty() : 
+                vertex = queue.dequeue()
+
+                for neighbour in self.graph[vertex] :
+                    # if adjacent vertices has no color, assign opposite color of vertex
+                    if neighbour not in color :
+                        color[neighbour] = 1 - color[vertex]
+                        queue.enqueue(neighbour)
+
+                    # If adjacent vertices have the same color, graph is not bipartite
+                    elif color[neighbour] == color[vertex] : return False
+    
+            return True
+        
+        # Check every connected component
+        # This is necessary because the graph may be disconnected.
+        for vertex in self.graph :
+            if vertex not in color :
+                if not bfs(vertex) : return False
+
+        return True
+
+
+# EULERIAN GRAPH - there are two things - Eulerian circuit & Eulerian path.
+# 1. Eulerian Circuit - traverse every edge exactly once and return to the starting vertex.
+# Undirected:
+#   - Graph must be connected
+#   - Every vertex must have even degree
+# Directed:
+#   - Graph must be strongly connected
+#   - inDegree(vertex) == outDegree(vertex)
+    def is_eulerian_circuit(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
+
+        # UNDIRECTED GRAPH
+        if not self.directed : 
+            # An Eulerian circuit requires the graph to be connected
+            if not self.is_connected() : return False
+
+            # Check degree of every vertex  
+            # Any odd-degree vertex means no Eulerian circuit
+            for vertex in self.graph :
+                if self.degree(vertex) % 2 != 0 : return False
+
+            return True
+
+        # DIRECTED GRAPH
+        else :
+            # An Eulerian circuit requires the graph to be strongly connected
+            if not self.is_connected() : return False
+
+            # Check In-degree & Out-degree of every vertex  
+            # different In-degree & Out-degree of vertex means no Eulerian circuit
+            for vertex in self.graph :
+                if self.inDegree(vertex) != self.outDegree(vertex) : return False
+
+            return True     
+        
+
+# 2. Eulerian Path - Traverses every edge exactly once, but does NOT necessarily return to the starting vertex.
+# - exactly 2 vertices have odd degree
+# Undirected:
+#   - Graph must be connected
+#   - Exactly 0(eulerian circuit) or 2 vertices have odd degree
+# Directed:
+#   - Graph must be strongly connected
+#   - Either:
+#       inDegree == outDegree for every vertex → Eulerian circuit
+#       0 or 1 vertex: outDegree = inDegree + 1 → starting vertex
+#       0 or 1 vertex: inDegree = outDegree + 1 → ending vertex
+#       all others have inDegree == outDegree
+    def is_eulerian_path(self) -> bool :
+        if self.isEmpty() : raise Exception("Graph is Empty !")
+
+        # UNDIRECTED GRAPH
+        if not self.directed : 
+            # An Eulerian path requires all vertices with edges to be connected
+            if not self.is_connected() : return False
+
+            # Check degree of every vertex  
+            # Any odd-degree vertex means no Eulerian circuit
+            odd_count = 0
+            for vertex in self.graph :
+                if self.degree(vertex) % 2 != 0 : 
+                    odd_count += 1
+
+            # Eulerian path exists with 0 or 2 odd-degree vertices
+            if odd_count == 0 or odd_count == 2: return True
+
+            return False
+
+        # DIRECTED GRAPH
+        else :
+             # Check connectivity ignoring edge direction
+            if not self.is_weakly_connected():
+                return False
+
+            # Check In-degree & Out-degree of every vertex
+            start_count = 0
+            end_count = 0
+            for vertex in self.graph :
+                # START vertex
+                if self.outDegree(vertex) == self.inDegree(vertex) + 1 : 
+                    start_count += 1
+
+                # END vertex
+                elif self.inDegree(vertex) == self.outDegree(vertex) + 1 : 
+                    end_count += 1
+
+                # NORMAL vertex
+                elif self.inDegree(vertex) == self.outDegree(vertex) : 
+                    pass
+
+                else : return False
+
+
+        if (start_count == 0 and end_count == 0) or \
+            (start_count == 1 and end_count == 1) :
+            return True
 
 
 
@@ -365,23 +537,22 @@ if __name__ == "__main__" :
     print("added edge : ", g.add_edge("f","a"))
 
 
-    print("neighbour of 'b' are : ",g.get_neighbours("b"))
-    print("vertex count : ", g.vertex_count())
-    print("edge count : ", g.edge_count())
+    # print("neighbour of 'b' are : ",g.get_neighbours("b"))
+    # print("vertex count : ", g.vertex_count())
+    # print("edge count : ", g.edge_count())
     g.display()
 
-    print("BFS from vertex 'a' : ", g.bfs("a"))
-    print("BFS from vertex 'b' : ", g.bfs("b"))
+    # print("BFS from vertex 'a' : ", g.bfs("a"))
+    # print("BFS from vertex 'b' : ", g.bfs("b"))
 
-    print("\nDFS from vertex 'd' : ", g.dfs("d"))
-    print("DFS from vertex 'a' : ", g.dfs("a"))
+    # print("\nDFS from vertex 'd' : ", g.dfs("d"))
+    # print("DFS from vertex 'a' : ", g.dfs("a"))
 
     print("\nIs this graph a COMPLETE GRPAH : ", g.is_complete())
     print("\nIs this graph a CONNECTED GRPAH : ", g.is_connected())
+    print("\nIs this graph a WEAKLY CONNECTED GRPAH : ", g.is_weakly_connected())
     print("\nIs this graph a CYCLIC GRPAH : ", g.is_cyclic())
+    print("\nIs this graph a BIPARTITE GRPAH : ", g.is_bipartite())
+    print("\nIs this graph has a EULERIAN CIRUIT : ", g.is_eulerian_circuit())
+    print("\nIs this graph has a EULERIAN PATH : ", g.is_eulerian_path())
     
-
-
-
-
-
